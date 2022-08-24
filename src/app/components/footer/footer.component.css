@@ -1,0 +1,27 @@
+.footer {
+  background-color: #1b242f;
+  color: #fff;
+}
+
+.footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+
+.github-logo {
+  font-size: 32px;
+}
+
+.year-info {
+  color: #8f9aa7;
+}
+
+.year-info .highlighted {
+  color: #e31b6d;
+}
+
+.course-logo {
+  width: 64px;
+}

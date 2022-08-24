@@ -1,0 +1,30 @@
+<header class="header">
+  <nav class="navbar navbar-expand-sm">
+    <div class="container justify-content-start">
+      <a href="./" class="navbar-brand d-flex align-items-center">
+        <fa-icon [icon]="faTableColumns"></fa-icon>
+        <span class="logo-text ms-2">PMA</span>
+      </a>
+
+      <div ngbDropdown class="lang-switch ms-4">
+        <span id="dropdownBasic1" ngbDropdownToggle class="lang-select">
+          en
+        </span>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="lang-menu">
+          <span ngbDropdownItem>en</span>
+          <span ngbDropdownItem>uz</span>
+        </div>
+      </div>
+
+      <ul class="navbar-nav ms-auto text-white align-items-center">
+        <li class="nav-item me-2">
+          <a href="./" class="nav-link">Login</a>
+        </li>
+        |
+        <li class="nav-item ms-2">
+          <a href="./" class="nav-link">Sign up</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

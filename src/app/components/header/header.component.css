@@ -1,0 +1,49 @@
+.header {
+  background-color: #1b242f;
+  border-bottom: 3px solid #04c2c9;
+}
+
+.navbar-brand {
+  color: #fff;
+}
+
+.navbar-brand fa-icon {
+  font-size: 32px;
+}
+
+.navbar-brand .logo-text {
+  font-weight: bold;
+}
+
+.nav-link {
+  color: #fff;
+  transition: 0.1s;
+}
+
+.nav-link:hover {
+  color: #e31b6d;
+}
+
+.lang-switch {
+  font-size: 20px;
+  color: #fff;
+}
+
+.lang-select {
+  cursor: pointer;
+}
+
+.dropdown-item {
+  cursor: pointer;
+}
+
+.dropdown-item:active {
+  color: #1e2125;
+  background-color: #e9ecef;
+}
+
+.lang-menu {
+  min-width: 80px;
+  padding: 0;
+  overflow: hidden;
+}
