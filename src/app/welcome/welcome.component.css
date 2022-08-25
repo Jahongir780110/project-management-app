@@ -10,13 +10,22 @@
   padding: 4px 32px;
   font-weight: 500;
 }
-
 .about .tryItButton:hover {
   opacity: 0.9;
 }
 
 .about-image img {
   width: 100%;
+}
+
+@media (max-width: 991px) {
+  .about .title {
+    font-size: 1.6rem;
+  }
+
+  .about .subtitle {
+    font-size: 1.1rem;
+  }
 }
 
 .info {
@@ -36,6 +45,20 @@
   border-left: 2px solid #e31b6d;
 }
 
+@media (max-width: 991px) {
+  .info .title {
+    font-size: 1.6rem;
+  }
+
+  .info-text {
+    border-left: none;
+  }
+  .info-text h5 {
+    font-size: 1.1rem;
+    font-weight: normal;
+  }
+}
+
 .benefits .title {
   border-bottom: 2px solid #e31b6d;
 }
@@ -52,7 +75,6 @@
   font-weight: 500;
   border-right: 4px solid #e31b6d;
 }
-
 .benefits .benefit.right {
   border-right: none;
   border-left: 4px solid #212529;
@@ -60,6 +82,12 @@
   text-align: left;
   padding-right: 0;
   padding-left: 8px;
+}
+
+@media (max-width: 768px) {
+  .benefits .benefit {
+    font-size: 16px;
+  }
 }
 
 .rss {
@@ -79,9 +107,13 @@
   padding: 4px 32px;
   font-weight: 500;
 }
-
 .rss .rs-signup:hover {
   opacity: 0.9;
+}
+
+.rss .rs-signup a {
+  text-decoration: none;
+  color: #fff;
 }
 
 .rss .feature {
@@ -92,6 +124,20 @@
   font-size: 24px;
   margin-right: 8px;
   color: #e31b6d;
+}
+
+@media (max-width: 991px) {
+  .rss .title {
+    font-size: 1.6rem;
+  }
+
+  .rss .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .rss .rs-info h5 {
+    font-weight: normal;
+  }
 }
 
 .author .title {

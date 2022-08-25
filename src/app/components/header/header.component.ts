@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../services/user.service';
 import { faTableColumns } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +11,11 @@ import { faTableColumns } from '@fortawesome/free-solid-svg-icons';
 })
 export class HeaderComponent implements OnInit {
   faTableColumns = faTableColumns;
+  faUser = faUser;
+  faRightFromBracket = faRightFromBracket;
+  isAuthenticated = this.userService.isAuthenticated;
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {}
 }

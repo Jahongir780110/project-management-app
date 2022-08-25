@@ -1,12 +1,12 @@
 <header class="header">
-  <nav class="navbar navbar-expand-sm">
-    <div class="container justify-content-start">
+  <nav class="navbar">
+    <div class="container justify-content-start align-items-center">
       <a href="./" class="navbar-brand d-flex align-items-center">
         <fa-icon [icon]="faTableColumns"></fa-icon>
-        <span class="logo-text ms-2">PMA</span>
+        <span class="logo-text ms-2 d-sm-inline-block d-none">PMA</span>
       </a>
 
-      <div ngbDropdown class="lang-switch ms-4">
+      <div ngbDropdown class="lang-switch ms-sm-4 ms-2">
         <span id="dropdownBasic1" ngbDropdownToggle class="lang-select">
           en
         </span>
@@ -16,13 +16,31 @@
         </div>
       </div>
 
-      <ul class="navbar-nav ms-auto text-white align-items-center">
+      <a *ngIf="isAuthenticated" href="./" class="nav-link ms-sm-5 ms-2"
+        >Boards</a
+      >
+
+      <ul class="navbar-nav ms-auto text-white align-items-center flex-row">
         <li class="nav-item me-2">
-          <a href="./" class="nav-link">Login</a>
+          <a *ngIf="!isAuthenticated; else user" href="./" class="nav-link"
+            >Login</a
+          >
+          <ng-template #user>
+            <a href="./" class="nav-link"
+              ><fa-icon [icon]="faUser"></fa-icon
+            ></a>
+          </ng-template>
         </li>
         |
         <li class="nav-item ms-2">
-          <a href="./" class="nav-link">Sign up</a>
+          <a *ngIf="!isAuthenticated; else logout" href="./" class="nav-link"
+            >Sign up</a
+          >
+          <ng-template #logout>
+            <a href="./" class="nav-link"
+              ><fa-icon [icon]="faRightFromBracket"></fa-icon
+            ></a>
+          </ng-template>
         </li>
       </ul>
     </div>
