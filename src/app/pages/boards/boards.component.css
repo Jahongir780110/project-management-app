@@ -1,0 +1,33 @@
+.boards {
+  min-height: calc(100vh - 100px);
+  background-color: #eae6ff;
+}
+
+.search {
+  width: 300px;
+  margin: auto;
+}
+
+.boards-list a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.board-card {
+  box-shadow: 0 2px 1px -1px #0003, 0 1px 1px #00000024, 0 1px 3px #0000001f;
+  height: 140px;
+  overflow-y: auto;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.board-card:hover {
+  transform: scale(1.05);
+}
+
+.card-close {
+  position: absolute;
+  top: 0;
+  right: 12px;
+  font-size: 24px;
+  cursor: pointer;
+}

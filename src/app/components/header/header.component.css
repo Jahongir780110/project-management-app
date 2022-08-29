@@ -19,7 +19,9 @@
   color: #fff;
   transition: 0.1s;
 }
-
+.nav-link.active {
+  color: #e31b6d;
+}
 .nav-link:hover {
   color: #e31b6d;
 }

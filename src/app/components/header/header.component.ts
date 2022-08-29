@@ -13,9 +13,8 @@ export class HeaderComponent implements OnInit {
   faTableColumns = faTableColumns;
   faUser = faUser;
   faRightFromBracket = faRightFromBracket;
-  isAuthenticated = this.userService.isAuthenticated;
 
-  constructor(private userService: UserService) {}
+  constructor(public userService: UserService) {}
 
   ngOnInit(): void {}
 }

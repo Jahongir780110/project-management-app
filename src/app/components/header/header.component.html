@@ -1,7 +1,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="container justify-content-start align-items-center">
-      <a href="./" class="navbar-brand d-flex align-items-center">
+      <a routerLink="/" class="navbar-brand d-flex align-items-center">
         <fa-icon [icon]="faTableColumns"></fa-icon>
         <span class="logo-text ms-2 d-sm-inline-block d-none">PMA</span>
       </a>
@@ -16,13 +16,19 @@
         </div>
       </div>
 
-      <a *ngIf="isAuthenticated" href="./" class="nav-link ms-sm-5 ms-2"
+      <a
+        *ngIf="userService.isAuthenticated"
+        routerLink="/boards"
+        class="nav-link ms-sm-5 ms-2"
         >Boards</a
       >
 
       <ul class="navbar-nav ms-auto text-white align-items-center flex-row">
         <li class="nav-item me-2">
-          <a *ngIf="!isAuthenticated; else user" href="./" class="nav-link"
+          <a
+            *ngIf="!userService.isAuthenticated; else user"
+            routerLink="/auth"
+            class="nav-link"
             >Login</a
           >
           <ng-template #user>
@@ -33,7 +39,11 @@
         </li>
         |
         <li class="nav-item ms-2">
-          <a *ngIf="!isAuthenticated; else logout" href="./" class="nav-link"
+          <a
+            *ngIf="!userService.isAuthenticated; else logout"
+            [routerLink]="['/auth']"
+            [queryParams]="{ signup: 'true' }"
+            class="nav-link"
             >Sign up</a
           >
           <ng-template #logout>

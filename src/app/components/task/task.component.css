@@ -1,0 +1,11 @@
+.task {
+  border-radius: 3px;
+  box-shadow: 0 1px 0 #091e4240;
+  padding: 8px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.task-remove {
+  cursor: pointer;
+}

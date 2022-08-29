@@ -1,0 +1,32 @@
+.board {
+  height: calc(100vh - 100px);
+}
+
+.board .container {
+  height: 100%;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.add-column-btn {
+  background-color: #04c2c9;
+  color: #fff;
+  border: none;
+  transition: 0.1s;
+  padding: 8px 24px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.add-column-btn:hover {
+  opacity: 0.9;
+}
+
+.columns {
+  column-gap: 12px;
+  width: 100%;
+  height: calc(100% - 78px);
+  overflow-x: auto;
+  padding-bottom: 8px;
+}

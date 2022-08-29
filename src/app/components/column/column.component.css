@@ -1,0 +1,41 @@
+.column {
+  width: 300px;
+  background-color: #eae6ff;
+  border-radius: 3px;
+}
+
+.column-title {
+  background-color: #04c2c9;
+  color: #fff;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.column-menu__wrapper {
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+  width: 20px;
+}
+.column-menu__wrapper::after {
+  display: none !important;
+}
+
+.column-options {
+  max-width: 80px;
+}
+
+.dropdown-item:active {
+  color: #1e2125;
+  background-color: #e9ecef;
+}
+
+.add-task__btn {
+  width: 100%;
+  border: none !important;
+  color: #04c2c9;
+  font-weight: 500;
+}
+.add-task__btn:hover {
+  background-color: #d3d3d3;
+}

@@ -1,0 +1,115 @@
+<div class="boards py-4">
+  <div class="container">
+    <div class="input-group search">
+      <input type="text" class="form-control" placeholder="Search..." />
+      <span class="input-group-text">Search</span>
+    </div>
+
+    <h1 class="title text-center mt-4">Your Boards</h1>
+
+    <div class="row boards-list mt-4">
+      <div *ngFor="let board of boardService.boards" class="col-4 mb-3">
+        <a [routerLink]="[board.id]">
+          <div class="card board-card">
+            <div
+              class="card-close text-danger"
+              (click)="open(prompt); deleteBoardWithPrompt($event, board.id)"
+            >
+              <fa-icon [icon]="faXmark"></fa-icon>
+            </div>
+            <div class="card-body">
+              <h3>{{ board.title }}</h3>
+              <p>
+                {{ board.description }}
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-4">
+        <div class="card board-card" (click)="open(content)">
+          <div
+            class="card-body d-flex align-items-center justify-content-center"
+          >
+            <h3 class="text-secondary">+ Create new board</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create a board</h4>
+  </div>
+
+  <div class="modal-body">
+    <div>
+      <label for="title" class="form-label">Board title:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        placeholder="Enter board title"
+        [(ngModel)]="title"
+      />
+    </div>
+
+    <div class="mt-3">
+      <label for="description" class="form-label">Board description:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="description"
+        placeholder="Enter board description"
+        [(ngModel)]="description"
+      />
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="modal.close()"
+    >
+      Cancel
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="createBoard()"
+    >
+      Ok
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #prompt let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Do you really want to delete the board?
+    </h4>
+  </div>
+
+  <div class="modal-body text-end">
+    <button
+      type="button"
+      class="btn btn-outline-secondary me-3"
+      (click)="modal.close()"
+    >
+      Cancel
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="deleteBoard()"
+    >
+      Delete
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,33 @@
+.auth {
+  min-height: 100vh;
+  background-color: #252934;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
+
+.form-wrapper {
+  width: 450px;
+  background-color: #1e242c;
+  padding: 24px 32px;
+  border-radius: 12px;
+}
+
+.auth-btn {
+  background-color: #e31b6d;
+  color: #fff;
+  border: none;
+  transition: 0.1s;
+  padding: 4px 32px;
+  font-weight: 500;
+}
+.auth-btn:hover {
+  opacity: 0.9;
+}
+
+.auth-switch__btn {
+  text-decoration: none;
+  color: #e31b6d;
+}

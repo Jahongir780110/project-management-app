@@ -1,0 +1,55 @@
+<div class="board">
+  <div class="container py-4">
+    <div class="title">
+      Board title: <strong>{{ boardService.selectedBoard.title }}</strong>
+    </div>
+
+    <div class="columns mt-4 d-flex align-items-start">
+      <app-column
+        *ngFor="let column of boardService.selectedBoard?.columns"
+        [title]="column.title"
+        [id]="column.id"
+      ></app-column>
+
+      <button class="btn add-column-btn" (click)="open(content)">
+        + Add column
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create a column</h4>
+  </div>
+
+  <div class="modal-body">
+    <div>
+      <label for="title" class="form-label">Column title:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        placeholder="Enter colun title"
+        [(ngModel)]="title"
+      />
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="modal.close()"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="createColumn()"
+    >
+      Ok
+    </button>
+  </div>
+</ng-template>

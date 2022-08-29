@@ -1,0 +1,28 @@
+<div class="column pb-3">
+  <div
+    class="column-title d-flex justify-content-between align-items-center px-3 py-2"
+  >
+    <h3>{{ title }}</h3>
+    <div ngbDropdown class="d-inline-block" placement="bottom-start">
+      <span class="d-inline-block column-menu__wrapper" ngbDropdownToggle>
+        <fa-icon [icon]="faEllipsisVertical" class="column-menu-btn"></fa-icon>
+      </span>
+
+      <div ngbDropdownMenu class="column-options">
+        <button
+          ngbDropdownItem
+          class="d-flex align-items-center justify-content-between text-secondary"
+        >
+          <fa-icon [icon]="faTrash"></fa-icon>
+          <span class="text" (click)="deleteColumn()">Delete column</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-task></app-task>
+
+  <div class="px-2 mt-3">
+    <button class="btn add-task__btn">+ Add new task</button>
+  </div>
+</div>
