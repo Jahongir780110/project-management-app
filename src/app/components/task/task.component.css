@@ -7,5 +7,7 @@
 }
 
 .task-remove {
-  cursor: pointer;
+  font-size: 20px;
+  width: 20px;
+  text-align: center;
 }

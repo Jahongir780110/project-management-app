@@ -6,6 +6,7 @@
 .search {
   width: 300px;
   margin: auto;
+  user-select: none;
 }
 
 .boards-list a {

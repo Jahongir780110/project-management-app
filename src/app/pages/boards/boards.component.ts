@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from 'src/app/services/board.service';
+import { UserService } from 'src/app/services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { Board } from 'src/app/models/board.model';
 
 @Component({
   selector: 'app-boards',
@@ -17,7 +17,8 @@ export class BoardsComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    public boardService: BoardService
+    public boardService: BoardService,
+    public userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +39,12 @@ export class BoardsComponent implements OnInit {
     });
   }
 
+  deleteBoardWithPrompt(event: Event, id: string) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.deletingBoardId = id;
+  }
+
   open(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
@@ -51,11 +58,5 @@ export class BoardsComponent implements OnInit {
           this.description = '';
         }
       );
-  }
-
-  deleteBoardWithPrompt(event: Event, id: string) {
-    event.stopPropagation();
-    event.preventDefault();
-    this.deletingBoardId = id;
   }
 }

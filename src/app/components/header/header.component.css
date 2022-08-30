@@ -1,6 +1,7 @@
 .header {
   background-color: #1b242f;
   border-bottom: 3px solid #04c2c9;
+  user-select: none;
 }
 
 .navbar-brand {

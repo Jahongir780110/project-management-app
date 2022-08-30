@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 import { Board } from '../models/board.model';
 import { Column } from '../models/column.model';
+import { Task } from '../models/task.model';
 
 @Injectable({
   providedIn: 'root',
@@ -28,8 +29,6 @@ export class BoardService {
       .get<Board[]>(`${this.baseUrl}/boards`, this.httpOptions)
       .pipe(
         tap((boards) => {
-          console.log('boards', boards);
-
           this.boards = boards;
         })
       );
@@ -41,6 +40,7 @@ export class BoardService {
       .pipe(
         tap((board) => {
           console.log('board', board);
+
           this.selectedBoard = board;
         })
       );
@@ -72,8 +72,8 @@ export class BoardService {
       })
       .pipe(
         tap(() => {
-          const targetId = this.boards.findIndex((board) => board.id === id);
-          this.boards.splice(targetId, 1);
+          const boardIndex = this.boards.findIndex((board) => board.id === id);
+          this.boards.splice(boardIndex, 1);
         })
       );
   }
@@ -89,7 +89,6 @@ export class BoardService {
       )
       .pipe(
         tap((board) => {
-          console.log('board again', board);
           this.selectedBoard.columns?.push(board);
         })
       );
@@ -107,11 +106,67 @@ export class BoardService {
       )
       .pipe(
         tap(() => {
-          const targetId = this.selectedBoard.columns?.findIndex(
+          const columnIndex = this.selectedBoard.columns?.findIndex(
             (col) => col.id === columnId
           );
-          if (targetId !== undefined) {
-            this.selectedBoard.columns?.splice(targetId, 1);
+          if (columnIndex !== undefined) {
+            this.selectedBoard.columns?.splice(columnIndex, 1);
+          }
+        })
+      );
+  }
+
+  addTask(
+    title: string,
+    description: string,
+    userId: string,
+    columnId: string
+  ) {
+    return this.http
+      .post<Task>(
+        `${this.baseUrl}/boards/${this.selectedBoard.id}/columns/${columnId}/tasks`,
+        {
+          title,
+          description,
+          userId,
+        },
+        this.httpOptions
+      )
+      .pipe(
+        tap((task) => {
+          const column = this.selectedBoard.columns?.find(
+            (col) => col.id === columnId
+          );
+
+          if (column) {
+            column.tasks ? column.tasks.push(task) : (column.tasks = [task]);
+          }
+        })
+      );
+  }
+
+  deleteTask(columnId: string, taskId: string) {
+    return this.http
+      .delete(
+        `${this.baseUrl}/boards/${this.selectedBoard.id}/columns/${columnId}/tasks/${taskId}`,
+        {
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${this.token}`,
+          }),
+        }
+      )
+      .pipe(
+        tap(() => {
+          const column = this.selectedBoard.columns?.find(
+            (col) => col.id === columnId
+          ) as Column;
+
+          const taskIndex = column.tasks?.findIndex(
+            (t) => t.id === taskId
+          ) as number;
+
+          if (taskId !== undefined) {
+            column.tasks?.splice(taskIndex, 1);
           }
         })
       );

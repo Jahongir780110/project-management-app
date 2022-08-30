@@ -1,7 +1,10 @@
 <div class="board">
   <div class="container py-4">
     <div class="title">
-      Board title: <strong>{{ boardService.selectedBoard.title }}</strong>
+      Board title:
+      <strong *ngIf="boardService.selectedBoard">{{
+        boardService.selectedBoard.title
+      }}</strong>
     </div>
 
     <div class="columns mt-4 d-flex align-items-start">

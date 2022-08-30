@@ -2,6 +2,7 @@
   width: 300px;
   background-color: #eae6ff;
   border-radius: 3px;
+  user-select: none;
 }
 
 .column-title {
