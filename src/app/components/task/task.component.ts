@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Task } from '../../models/task.model';
@@ -19,9 +19,17 @@ export class TaskComponent implements OnInit {
   task!: Task;
   @Input()
   columnId!: string;
+  @Output()
+  edit = new EventEmitter();
 
-  deleteTask() {
-    console.log('delete task', this.task);
+  deleteTask(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
     this.boardService.deleteTask(this.columnId, this.task.id).subscribe();
+  }
+
+  editTask() {
+    this.edit.emit();
+    // this.boardService.editTask(this.columnId, this.task.id, this.task);
   }
 }

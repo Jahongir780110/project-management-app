@@ -12,6 +12,15 @@
   border-top-right-radius: 3px;
 }
 
+.edit-title input {
+  width: 180px;
+}
+
+.edit-title fa-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
 .column-menu__wrapper {
   text-align: center;
   font-size: 20px;

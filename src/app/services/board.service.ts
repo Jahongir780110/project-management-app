@@ -39,9 +39,12 @@ export class BoardService {
       .get<Board>(`${this.baseUrl}/boards/${id}`, this.httpOptions)
       .pipe(
         tap((board) => {
-          console.log('board', board);
-
           this.selectedBoard = board;
+          this.selectedBoard.columns?.sort((a, b) =>
+            a.order < b.order ? -1 : 1
+          );
+
+          console.log('board', board);
         })
       );
   }
@@ -94,6 +97,28 @@ export class BoardService {
       );
   }
 
+  editColumn(columnId: string, order: number, title: string) {
+    return this.http
+      .put<Column>(
+        `${this.baseUrl}/boards/${this.selectedBoard.id}/columns/${columnId}`,
+        {
+          title,
+          order,
+        },
+        this.httpOptions
+      )
+      .pipe(
+        tap(() => {
+          const column = this.selectedBoard.columns?.find(
+            (col) => col.id === columnId
+          );
+          if (column) {
+            column.title = title;
+          }
+        })
+      );
+  }
+
   deleteColumn(columnId: string) {
     return this.http
       .delete(
@@ -140,6 +165,38 @@ export class BoardService {
 
           if (column) {
             column.tasks ? column.tasks.push(task) : (column.tasks = [task]);
+          }
+        })
+      );
+  }
+
+  editTask(columnId: string, taskId: string, editedTask: Task) {
+    return this.http
+      .put<Task>(
+        `${this.baseUrl}/boards/${this.selectedBoard.id}/columns/${columnId}/tasks/${taskId}`,
+        {
+          title: editedTask.title,
+          order: editedTask.order,
+          description: editedTask.description,
+          userId: editedTask.userId,
+          boardId: this.selectedBoard.id,
+          columnId,
+        },
+        this.httpOptions
+      )
+      .pipe(
+        tap((res) => {
+          console.log('res', res);
+
+          const column = this.selectedBoard.columns?.find(
+            (col) => col.id === columnId
+          ) as Column;
+          console.log('column', column);
+
+          let taskIndex = column.tasks?.findIndex((t) => t.id === taskId);
+
+          if (taskIndex !== undefined) {
+            column.tasks?.splice(taskIndex, 1, res);
           }
         })
       );

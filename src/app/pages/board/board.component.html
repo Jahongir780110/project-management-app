@@ -12,6 +12,7 @@
         *ngFor="let column of boardService.selectedBoard?.columns"
         [title]="column.title"
         [id]="column.id"
+        [order]="column.order"
       ></app-column>
 
       <button class="btn add-column-btn" (click)="open(content)">

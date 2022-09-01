@@ -2,8 +2,37 @@
   <div
     class="column-title d-flex justify-content-between align-items-center px-3 py-2"
   >
-    <h3>{{ title }}</h3>
-    <div ngbDropdown class="d-inline-block" placement="bottom-start">
+    <h3 *ngIf="!isEditingTitle">{{ title }}</h3>
+
+    <div
+      *ngIf="isEditingTitle"
+      class="edit-title w-100 d-flex align-item-center"
+    >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter column title"
+        #titleInput
+        [(ngModel)]="columnTitle"
+      />
+      <fa-icon
+        [icon]="faCheck"
+        class="ms-auto me-2 text-success"
+        (click)="editColumn()"
+      ></fa-icon>
+      <fa-icon
+        [icon]="faXmark"
+        class="text-danger"
+        (click)="cancelEditing()"
+      ></fa-icon>
+    </div>
+
+    <div
+      *ngIf="!isEditingTitle"
+      ngbDropdown
+      class="d-inline-block"
+      placement="bottom-start"
+    >
       <span class="d-inline-block column-menu__wrapper" ngbDropdownToggle>
         <fa-icon [icon]="faEllipsisVertical" class="column-menu-btn"></fa-icon>
       </span>
@@ -11,11 +40,20 @@
       <div ngbDropdownMenu class="column-options">
         <button
           ngbDropdownItem
-          class="d-flex align-items-center justify-content-between text-secondary"
+          class="d-flex align-items-center text-secondary"
+          (click)="openEditTitleInput()"
+        >
+          <fa-icon [icon]="faPen"></fa-icon>
+          <span class="text ms-2">Edit column</span>
+        </button>
+
+        <button
+          ngbDropdownItem
+          class="d-flex align-items-center text-secondary"
           (click)="deleteColumn()"
         >
           <fa-icon [icon]="faTrash"></fa-icon>
-          <span class="text">Delete column</span>
+          <span class="text ms-2">Delete column</span>
         </button>
       </div>
     </div>
@@ -25,6 +63,7 @@
     *ngFor="let task of column.tasks"
     [task]="task"
     [columnId]="id"
+    (edit)="openEditTaskForm(task); open(content)"
   ></app-task>
 
   <div class="px-2 mt-3">
@@ -36,7 +75,9 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Create a task</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ isEditingTask ? "Edit a task" : "Create a task" }}
+    </h4>
   </div>
 
   <div class="modal-body">
@@ -81,6 +122,15 @@
       Cancel
     </button>
     <button
+      *ngIf="isEditingTask"
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="editTask()"
+    >
+      Edit
+    </button>
+    <button
+      *ngIf="!isEditingTask"
       type="button"
       class="btn btn-outline-primary"
       (click)="createTask()"

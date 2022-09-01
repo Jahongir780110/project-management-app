@@ -1,11 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { BoardService } from 'src/app/services/board.service';
 import { UserService } from 'src/app/services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTrash,
+  faPen,
+  faXmark,
+  faCheck,
+} from '@fortawesome/free-solid-svg-icons';
 import { Column } from '../../models/column.model';
-import { Task } from '../../models/task.model';
+import { Task } from 'src/app/models/task.model';
+import { TaskComponent } from '../task/task.component';
 
 @Component({
   selector: 'app-column',
@@ -15,15 +21,26 @@ import { Task } from '../../models/task.model';
 export class ColumnComponent implements OnInit {
   faEllipsisVertical = faEllipsisVertical;
   faTrash = faTrash;
+  faPen = faPen;
+  faXmark = faXmark;
+  faCheck = faCheck;
+
   taskTitle = '';
   taskDescription = '';
   taskUserId = '';
   column!: Column;
+  isEditingTitle = false;
+  columnTitle = '';
+  isEditingTask = false;
+  editedTask!: Task;
 
+  @ViewChild('titleInput') titleInput!: ElementRef;
   @Input()
   title!: string;
   @Input()
   id!: string;
+  @Input()
+  order!: number;
 
   constructor(
     private boardService: BoardService,
@@ -41,13 +58,60 @@ export class ColumnComponent implements OnInit {
     }
   }
 
+  cancelEditing() {
+    this.isEditingTitle = false;
+    this.columnTitle = '';
+  }
+
+  openEditTitleInput() {
+    this.isEditingTitle = true;
+    this.columnTitle = this.title;
+    setTimeout(() => {
+      this.titleInput.nativeElement.focus();
+    }, 0);
+  }
+
+  editColumn() {
+    if (this.columnTitle.trim().length === 0) {
+      return;
+    }
+
+    this.boardService
+      .editColumn(this.id, this.order, this.columnTitle)
+      .subscribe(() => {
+        this.isEditingTitle = false;
+        this.columnTitle = '';
+      });
+  }
+
   deleteColumn() {
     this.boardService.deleteColumn(this.id).subscribe();
+  }
+
+  openEditTaskForm(task: Task) {
+    this.isEditingTask = true;
+    this.editedTask = task;
+    this.taskTitle = task.title;
+    this.taskDescription = task.description;
+    this.taskUserId = task.userId;
   }
 
   createTask() {
     this.boardService
       .addTask(this.taskTitle, this.taskDescription, this.taskUserId, this.id)
+      .subscribe(() => {
+        this.modalService.dismissAll();
+      });
+  }
+
+  editTask() {
+    this.boardService
+      .editTask(this.id, this.editedTask.id, {
+        ...this.editedTask,
+        title: this.taskTitle,
+        description: this.taskDescription,
+        userId: this.taskUserId,
+      })
       .subscribe(() => {
         this.modalService.dismissAll();
       });
@@ -61,11 +125,13 @@ export class ColumnComponent implements OnInit {
           this.taskTitle = '';
           this.taskDescription = '';
           this.taskUserId = '';
+          this.isEditingTask = false;
         },
         () => {
           this.taskTitle = '';
           this.taskDescription = '';
           this.taskUserId = '';
+          this.isEditingTask = false;
         }
       );
   }
