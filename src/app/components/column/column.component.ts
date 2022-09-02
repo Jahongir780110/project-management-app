@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { BoardService } from 'src/app/services/board.service';
 import { UserService } from 'src/app/services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import {
   faTrash,
@@ -11,7 +12,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Column } from '../../models/column.model';
 import { Task } from 'src/app/models/task.model';
-import { TaskComponent } from '../task/task.component';
 
 @Component({
   selector: 'app-column',
@@ -55,6 +55,7 @@ export class ColumnComponent implements OnInit {
     );
     if (column) {
       this.column = column;
+      this.column.tasks?.sort((a, b) => (a.order < b.order ? -1 : 1));
     }
   }
 
@@ -134,5 +135,47 @@ export class ColumnComponent implements OnInit {
           this.isEditingTask = false;
         }
       );
+  }
+
+  drop(event: any) {
+    console.log('editedTask', event.item.data);
+
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      this.boardService
+        .editTask(this.column.id, event.item.data.id, {
+          ...event.item.data,
+          order: event.currentIndex + 1,
+          columnId: this.id,
+        })
+        .subscribe();
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      console.log(event.container.id);
+
+      this.boardService
+        .editTask(
+          event.previousContainer.id,
+          event.item.data.id,
+          {
+            ...event.item.data,
+            order: event.currentIndex + 1,
+            columnId: event.container.id,
+          },
+          true
+        )
+        .subscribe();
+    }
   }
 }

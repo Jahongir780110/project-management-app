@@ -170,7 +170,12 @@ export class BoardService {
       );
   }
 
-  editTask(columnId: string, taskId: string, editedTask: Task) {
+  editTask(
+    columnId: string,
+    taskId: string,
+    editedTask: Task,
+    isChangingOrder?: boolean
+  ) {
     return this.http
       .put<Task>(
         `${this.baseUrl}/boards/${this.selectedBoard.id}/columns/${columnId}/tasks/${taskId}`,
@@ -180,7 +185,7 @@ export class BoardService {
           description: editedTask.description,
           userId: editedTask.userId,
           boardId: this.selectedBoard.id,
-          columnId,
+          columnId: editedTask.columnId,
         },
         this.httpOptions
       )
@@ -188,10 +193,11 @@ export class BoardService {
         tap((res) => {
           console.log('res', res);
 
+          if (isChangingOrder) return;
+
           const column = this.selectedBoard.columns?.find(
             (col) => col.id === columnId
           ) as Column;
-          console.log('column', column);
 
           let taskIndex = column.tasks?.findIndex((t) => t.id === taskId);
 

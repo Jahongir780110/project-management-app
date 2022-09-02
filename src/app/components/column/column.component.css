@@ -3,6 +3,7 @@
   background-color: #eae6ff;
   border-radius: 3px;
   user-select: none;
+  cursor: move;
 }
 
 .column-title {

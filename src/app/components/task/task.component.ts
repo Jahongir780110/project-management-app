@@ -30,6 +30,5 @@ export class TaskComponent implements OnInit {
 
   editTask() {
     this.edit.emit();
-    // this.boardService.editTask(this.columnId, this.task.id, this.task);
   }
 }

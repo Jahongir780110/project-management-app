@@ -7,12 +7,23 @@
       }}</strong>
     </div>
 
-    <div class="columns mt-4 d-flex align-items-start">
+    <div
+      cdkDropList
+      cdkDropListGroup
+      cdkDropListOrientation="horizontal"
+      [cdkDropListData]="
+        boardService.selectedBoard ? boardService.selectedBoard.columns : []
+      "
+      (cdkDropListDropped)="drop($event)"
+      class="columns mt-4 d-flex align-items-start"
+    >
       <app-column
         *ngFor="let column of boardService.selectedBoard?.columns"
         [title]="column.title"
         [id]="column.id"
         [order]="column.order"
+        [cdkDragData]="column"
+        cdkDrag
       ></app-column>
 
       <button class="btn add-column-btn" (click)="open(content)">

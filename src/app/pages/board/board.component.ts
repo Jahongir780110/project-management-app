@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BoardService } from 'src/app/services/board.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-board',
@@ -44,5 +45,21 @@ export class BoardComponent implements OnInit {
           this.title = '';
         }
       );
+  }
+
+  drop(event: any) {
+    moveItemInArray(
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+
+    this.boardService
+      .editColumn(
+        event.item.data.id,
+        event.currentIndex + 1,
+        event.item.data.title
+      )
+      .subscribe();
   }
 }
