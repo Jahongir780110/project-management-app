@@ -1,40 +1,48 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthUser } from '../../models/authUser.model';
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css'],
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.css'],
 })
-export class AuthComponent implements OnInit {
-  isSignup = false;
+export class EditProfileComponent implements OnInit {
   form: AuthUser = {
     login: '',
     password: '',
     name: '',
   };
+  repeatPassword = '';
   nameError = false;
   loginError = false;
   passwordError = false;
+  repeatPasswordError = false;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((queryParams) => {
-      if (queryParams['signup']) {
-        this.isSignup = true;
-      } else {
-        this.isSignup = false;
+    this.form.name = this.userService.user.name;
+    this.form.login = this.userService.user.login;
+  }
+
+  delete() {
+    this.userService.deleteUser().subscribe((res) => {
+      if (res instanceof HttpErrorResponse) {
+        return this.showErrorAlert(res);
       }
+
+      this.showSuccessAlert('User successfully deleted!');
+      setTimeout(() => {
+        this.router.navigate(['/']);
+      }, 3000);
     });
   }
 
@@ -44,8 +52,9 @@ export class AuthComponent implements OnInit {
     this.nameError = false;
     this.loginError = false;
     this.passwordError = false;
+    this.repeatPasswordError = false;
 
-    if (this.isSignup && !this.form.name?.trim().length) {
+    if (!this.form.name?.trim().length) {
       this.nameError = true;
       return;
     }
@@ -57,26 +66,18 @@ export class AuthComponent implements OnInit {
       this.passwordError = true;
       return;
     }
-
-    if (this.isSignup) {
-      return this.userService.createUser(this.form).subscribe((res) => {
-        if (res instanceof HttpErrorResponse) {
-          return this.showErrorAlert(res);
-        }
-
-        this.router.navigate(['/auth']);
-      });
+    if (this.form.password.trim() !== this.repeatPassword) {
+      this.repeatPasswordError = true;
+      return;
     }
 
-    this.userService
-      .signIn({ login: this.form.login, password: this.form.password })
-      .subscribe((res) => {
-        if (res instanceof HttpErrorResponse) {
-          return this.showErrorAlert(res);
-        }
+    this.userService.editProfile(this.form).subscribe((res) => {
+      if (res instanceof HttpErrorResponse) {
+        return this.showErrorAlert(res);
+      }
 
-        this.router.navigate(['/boards']);
-      });
+      this.showSuccessAlert('User successfully edited!');
+    });
   }
 
   showErrorAlert(res: HttpErrorResponse) {
@@ -87,6 +88,14 @@ export class AuthComponent implements OnInit {
     this.snackBar.open(errMessage, undefined, {
       duration: 3000,
       panelClass: ['error-snackbar', 'bg-danger', 'text-white'],
+      verticalPosition: 'top',
+    });
+  }
+
+  showSuccessAlert(message: string) {
+    this.snackBar.open(message, undefined, {
+      duration: 3000,
+      panelClass: ['error-snackbar', 'bg-success', 'text-white'],
       verticalPosition: 'top',
     });
   }

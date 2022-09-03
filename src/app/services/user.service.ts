@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { of } from 'rxjs';
+import { tap, catchError, mergeMap } from 'rxjs/operators';
+import jwt_decode from 'jwt-decode';
 import { environment } from '../../environments/environment';
 import { AuthUser } from '../models/authUser.model';
 import { User } from '../models/user.model';
@@ -10,14 +16,8 @@ import { User } from '../models/user.model';
 })
 export class UserService {
   baseUrl = environment.baseUrl;
-  token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjFmNTE0Yy1hMjk5LTQwM2QtOWQ4MC1jZDViYjhmNTg1YzIiLCJsb2dpbiI6ImNvbm9yOTkiLCJpYXQiOjE2NjE3NjQ2OTJ9.dSXBIEXZ_DBg5vOuWdjPY9_TYEuu8VWJYuqwZFAIDi0';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.token}`,
-    }),
-  };
+  token = '';
+  user!: User;
   users: User[] = [];
 
   constructor(private http: HttpClient) {}
@@ -26,12 +26,26 @@ export class UserService {
     return this.token ? true : false;
   }
 
+  get httpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      }),
+    };
+  }
+
   createUser(authUser: AuthUser) {
-    return this.http.post<User>(
-      `${this.baseUrl}/signup`,
-      authUser,
-      this.httpOptions
-    );
+    return this.http
+      .post<User>(`${this.baseUrl}/signup`, authUser, this.httpOptions)
+      .pipe(
+        tap((user) => {
+          this.user = user;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          return of(error);
+        })
+      );
   }
 
   signIn(authUser: AuthUser) {
@@ -42,10 +56,68 @@ export class UserService {
         this.httpOptions
       )
       .pipe(
-        tap((user) => {
-          this.token = user.token;
+        tap((res) => {
+          this.token = res.token;
+          localStorage.setItem('token', this.token);
+          const tokenInfo = this.getDecodedAccessToken(this.token);
+
+          this.http
+            .get<User>(
+              `${this.baseUrl}/users/${tokenInfo.userId}`,
+              this.httpOptions
+            )
+            .subscribe((user) => {
+              this.user = user;
+              localStorage.setItem('user', JSON.stringify(this.user));
+            });
+        }),
+        catchError((error: HttpErrorResponse) => {
+          return of(error);
         })
       );
+  }
+
+  editProfile(user: AuthUser) {
+    return this.http
+      .put<User>(
+        `${this.baseUrl}/users/${this.user.id}`,
+        user,
+        this.httpOptions
+      )
+      .pipe(
+        tap((user) => {
+          this.user = user;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          return of(error);
+        })
+      );
+  }
+
+  deleteUser() {
+    return this.http
+      .delete(`${this.baseUrl}/users/${this.user.id}`, {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${this.token}`,
+        }),
+      })
+      .pipe(
+        tap(() => {
+          this.logout();
+        }),
+        catchError((error: HttpErrorResponse) => {
+          return of(error);
+        })
+      );
+  }
+
+  logout() {
+    this.token = '';
+    this.user.name = '';
+    this.user.id = '';
+    this.user.login = '';
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   getAllUsers() {
@@ -56,5 +128,13 @@ export class UserService {
           this.users = users;
         })
       );
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
   }
 }

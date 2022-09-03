@@ -80,7 +80,10 @@
   </div>
 
   <div class="px-2 mt-3">
-    <button class="btn add-task__btn" (click)="open(content)">
+    <button
+      class="btn add-task__btn"
+      (click)="open(content); taskUserId = userService.user.id"
+    >
       + Add new task
     </button>
   </div>

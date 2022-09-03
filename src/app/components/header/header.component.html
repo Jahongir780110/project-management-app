@@ -24,32 +24,39 @@
       >
 
       <ul class="navbar-nav ms-auto text-white align-items-center flex-row">
-        <li class="nav-item me-2">
+        <li class="nav-item me-3">
           <a
             *ngIf="!userService.isAuthenticated; else user"
             routerLink="/auth"
             class="nav-link"
             >Login</a
           >
+
           <ng-template #user>
-            <a href="./" class="nav-link"
-              ><fa-icon [icon]="faUser"></fa-icon
-            ></a>
+            <a routerLink="/edit-profile" class="nav-link">
+              <span *ngIf="userService.user" class="name me-2">{{
+                userService.user.name
+              }}</span>
+              <fa-icon [icon]="faUser"></fa-icon>
+            </a>
           </ng-template>
         </li>
         |
-        <li class="nav-item ms-2">
+        <li class="nav-item ms-3">
           <a
-            *ngIf="!userService.isAuthenticated; else logout"
+            *ngIf="!userService.isAuthenticated; else logoutButton"
             [routerLink]="['/auth']"
             [queryParams]="{ signup: 'true' }"
             class="nav-link"
             >Sign up</a
           >
-          <ng-template #logout>
-            <a href="./" class="nav-link"
-              ><fa-icon [icon]="faRightFromBracket"></fa-icon
-            ></a>
+
+          <ng-template #logoutButton
+            ><fa-icon
+              class="logout-icon"
+              [icon]="faRightFromBracket"
+              (click)="logout()"
+            ></fa-icon>
           </ng-template>
         </li>
       </ul>

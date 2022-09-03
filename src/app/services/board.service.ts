@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UserService } from './user.service';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Board } from '../models/board.model';
@@ -11,24 +12,27 @@ import { Task } from '../models/task.model';
 })
 export class BoardService {
   baseUrl = environment.baseUrl;
-  token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4YjFmNTE0Yy1hMjk5LTQwM2QtOWQ4MC1jZDViYjhmNTg1YzIiLCJsb2dpbiI6ImNvbm9yOTkiLCJpYXQiOjE2NjE3NjQ2OTJ9.dSXBIEXZ_DBg5vOuWdjPY9_TYEuu8VWJYuqwZFAIDi0';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.token}`,
-    }),
-  };
   boards: Board[] = [];
   selectedBoard!: Board;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
+
+  get httpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.userService.token}`,
+      }),
+    };
+  }
 
   getAllBoards() {
     return this.http
       .get<Board[]>(`${this.baseUrl}/boards`, this.httpOptions)
       .pipe(
         tap((boards) => {
+          console.log('boards', boards);
+
           this.boards = boards;
         })
       );
@@ -70,7 +74,7 @@ export class BoardService {
     return this.http
       .delete(`${this.baseUrl}/boards/${id}`, {
         headers: new HttpHeaders({
-          Authorization: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.userService.token}`,
         }),
       })
       .pipe(
@@ -125,7 +129,7 @@ export class BoardService {
         `${this.baseUrl}/boards/${this.selectedBoard.id}/columns/${columnId}`,
         {
           headers: new HttpHeaders({
-            Authorization: `Bearer ${this.token}`,
+            Authorization: `Bearer ${this.userService.token}`,
           }),
         }
       )
@@ -214,7 +218,7 @@ export class BoardService {
         `${this.baseUrl}/boards/${this.selectedBoard.id}/columns/${columnId}/tasks/${taskId}`,
         {
           headers: new HttpHeaders({
-            Authorization: `Bearer ${this.token}`,
+            Authorization: `Bearer ${this.userService.token}`,
           }),
         }
       )

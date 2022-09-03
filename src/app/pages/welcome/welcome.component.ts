@@ -16,14 +16,13 @@ export class WelcomeComponent implements OnInit {
   faClock = faClock;
   faUserGroup = faUserGroup;
   faCertificate = faCertificate;
-  isAuthenticated = this.userService.isAuthenticated;
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {}
 
   openBoards() {
-    if (!this.isAuthenticated) {
+    if (!this.userService.isAuthenticated) {
       this.router.navigate(['/auth']);
     } else {
       this.router.navigate(['/boards']);

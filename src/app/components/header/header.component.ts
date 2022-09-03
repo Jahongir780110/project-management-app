@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { faTableColumns } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +15,12 @@ export class HeaderComponent implements OnInit {
   faUser = faUser;
   faRightFromBracket = faRightFromBracket;
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService, private router: Router) {}
 
   ngOnInit(): void {}
+
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['/']);
+  }
 }

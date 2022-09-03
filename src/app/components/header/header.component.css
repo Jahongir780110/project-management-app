@@ -50,3 +50,12 @@
   padding: 0;
   overflow: hidden;
 }
+
+.logout-icon {
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition: 0.1s;
+}
+.logout-icon:hover {
+  color: #e31b6d;
+}
