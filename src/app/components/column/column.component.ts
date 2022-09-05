@@ -3,6 +3,8 @@ import { BoardService } from 'src/app/services/board.service';
 import { UserService } from 'src/app/services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { Dialog } from '@angular/cdk/dialog';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import {
   faTrash,
@@ -33,6 +35,9 @@ export class ColumnComponent implements OnInit {
   columnTitle = '';
   isEditingTask = false;
   editedTask!: Task;
+  titleError = false;
+  taskTitleError = false;
+  taskDescriptionError = false;
 
   @ViewChild('titleInput') titleInput!: ElementRef;
   @Input()
@@ -45,7 +50,8 @@ export class ColumnComponent implements OnInit {
   constructor(
     private boardService: BoardService,
     public userService: UserService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public dialog: Dialog
   ) {}
 
   ngOnInit(): void {
@@ -65,15 +71,20 @@ export class ColumnComponent implements OnInit {
   }
 
   openEditTitleInput() {
+    this.titleError = false;
     this.isEditingTitle = true;
     this.columnTitle = this.title;
+
     setTimeout(() => {
       this.titleInput.nativeElement.focus();
     }, 0);
   }
 
   editColumn() {
+    this.titleError = false;
+
     if (this.columnTitle.trim().length === 0) {
+      this.titleError = true;
       return;
     }
 
@@ -98,6 +109,18 @@ export class ColumnComponent implements OnInit {
   }
 
   createTask() {
+    this.taskTitleError = false;
+    this.taskDescriptionError = false;
+
+    if (!this.taskTitle.trim().length) {
+      this.taskTitleError = true;
+      return;
+    }
+    if (!this.taskDescription.trim().length) {
+      this.taskDescriptionError = true;
+      return;
+    }
+
     this.boardService
       .addTask(this.taskTitle, this.taskDescription, this.taskUserId, this.id)
       .subscribe(() => {
@@ -106,12 +129,25 @@ export class ColumnComponent implements OnInit {
   }
 
   editTask() {
+    this.taskTitleError = false;
+    this.taskDescriptionError = false;
+
+    if (!this.taskTitle.trim().length) {
+      this.taskTitleError = true;
+      return;
+    }
+    if (!this.taskDescription.trim().length) {
+      this.taskDescriptionError = true;
+      return;
+    }
+
     this.boardService
       .editTask(this.id, this.editedTask.id, {
         ...this.editedTask,
         title: this.taskTitle,
         description: this.taskDescription,
         userId: this.taskUserId,
+        columnId: this.id,
       })
       .subscribe(() => {
         this.modalService.dismissAll();
@@ -127,14 +163,32 @@ export class ColumnComponent implements OnInit {
           this.taskDescription = '';
           this.taskUserId = '';
           this.isEditingTask = false;
+          this.taskTitleError = false;
+          this.taskDescriptionError = false;
         },
         () => {
           this.taskTitle = '';
           this.taskDescription = '';
           this.taskUserId = '';
           this.isEditingTask = false;
+          this.taskTitleError = false;
+          this.taskDescriptionError = false;
         }
       );
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open<string>(ConfirmDialogComponent, {
+      data: {
+        type: 'column',
+      },
+    });
+
+    dialogRef.closed.subscribe((message) => {
+      if (message) {
+        this.deleteColumn();
+      }
+    });
   }
 
   drop(event: any) {

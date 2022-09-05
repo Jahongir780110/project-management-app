@@ -9,6 +9,10 @@
   user-select: none;
 }
 
+.spinner svg {
+  background-color: green;
+}
+
 .boards-list a {
   text-decoration: none;
   color: inherit;

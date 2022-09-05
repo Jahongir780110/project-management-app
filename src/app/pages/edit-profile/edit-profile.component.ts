@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { Dialog } from '@angular/cdk/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthUser } from '../../models/authUser.model';
 
@@ -17,6 +19,7 @@ export class EditProfileComponent implements OnInit {
     name: '',
   };
   repeatPassword = '';
+
   nameError = false;
   loginError = false;
   passwordError = false;
@@ -25,7 +28,8 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: Dialog
   ) {}
 
   ngOnInit(): void {
@@ -33,16 +37,31 @@ export class EditProfileComponent implements OnInit {
     this.form.login = this.userService.user.login;
   }
 
-  delete() {
-    this.userService.deleteUser().subscribe((res) => {
-      if (res instanceof HttpErrorResponse) {
-        return this.showErrorAlert(res);
-      }
+  openDialog(): void {
+    const dialogRef = this.dialog.open<string>(ConfirmDialogComponent, {
+      data: {
+        type: 'user',
+      },
+    });
 
-      this.showSuccessAlert('User successfully deleted!');
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, 3000);
+    dialogRef.closed.subscribe((message) => {
+      if (message) {
+        this.delete();
+      }
+    });
+  }
+
+  delete() {
+    this.userService.deleteUser().subscribe({
+      next: () => {
+        this.showSuccessAlert('User successfully deleted!');
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 3000);
+      },
+      error: (err) => {
+        this.showErrorAlert(err);
+      },
     });
   }
 
@@ -71,12 +90,13 @@ export class EditProfileComponent implements OnInit {
       return;
     }
 
-    this.userService.editProfile(this.form).subscribe((res) => {
-      if (res instanceof HttpErrorResponse) {
-        return this.showErrorAlert(res);
-      }
-
-      this.showSuccessAlert('User successfully edited!');
+    this.userService.editProfile(this.form).subscribe({
+      next: () => {
+        this.showSuccessAlert('User successfully edited!');
+      },
+      error: (err) => {
+        this.showErrorAlert(err);
+      },
     });
   }
 

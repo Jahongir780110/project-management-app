@@ -5,7 +5,7 @@
   cdkDrag
 >
   <div class="task-title">{{ task.title }}</div>
-  <div class="task-remove text-danger" (click)="deleteTask($event)">
+  <div class="task-remove text-danger" (click)="openDialog($event)">
     <fa-icon [icon]="faXmark"></fa-icon>
   </div>
 </div>

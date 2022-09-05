@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
-import { of } from 'rxjs';
-import { tap, catchError, mergeMap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
 import { environment } from '../../environments/environment';
 import { AuthUser } from '../models/authUser.model';
@@ -35,15 +30,20 @@ export class UserService {
     };
   }
 
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
+  }
+
   createUser(authUser: AuthUser) {
     return this.http
       .post<User>(`${this.baseUrl}/signup`, authUser, this.httpOptions)
       .pipe(
         tap((user) => {
           this.user = user;
-        }),
-        catchError((error: HttpErrorResponse) => {
-          return of(error);
         })
       );
   }
@@ -70,9 +70,6 @@ export class UserService {
               this.user = user;
               localStorage.setItem('user', JSON.stringify(this.user));
             });
-        }),
-        catchError((error: HttpErrorResponse) => {
-          return of(error);
         })
       );
   }
@@ -87,9 +84,6 @@ export class UserService {
       .pipe(
         tap((user) => {
           this.user = user;
-        }),
-        catchError((error: HttpErrorResponse) => {
-          return of(error);
         })
       );
   }
@@ -104,18 +98,17 @@ export class UserService {
       .pipe(
         tap(() => {
           this.logout();
-        }),
-        catchError((error: HttpErrorResponse) => {
-          return of(error);
         })
       );
   }
 
   logout() {
     this.token = '';
-    this.user.name = '';
-    this.user.id = '';
-    this.user.login = '';
+    this.user = {
+      name: '',
+      id: '',
+      login: '',
+    };
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   }
@@ -128,13 +121,5 @@ export class UserService {
           this.users = users;
         })
       );
-  }
-
-  getDecodedAccessToken(token: string): any {
-    try {
-      return jwt_decode(token);
-    } catch (Error) {
-      return null;
-    }
   }
 }

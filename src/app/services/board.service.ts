@@ -31,8 +31,6 @@ export class BoardService {
       .get<Board[]>(`${this.baseUrl}/boards`, this.httpOptions)
       .pipe(
         tap((boards) => {
-          console.log('boards', boards);
-
           this.boards = boards;
         })
       );
@@ -43,12 +41,13 @@ export class BoardService {
       .get<Board>(`${this.baseUrl}/boards/${id}`, this.httpOptions)
       .pipe(
         tap((board) => {
+          console.log('board', board);
+
           this.selectedBoard = board;
+
           this.selectedBoard.columns?.sort((a, b) =>
             a.order < b.order ? -1 : 1
           );
-
-          console.log('board', board);
         })
       );
   }
@@ -95,8 +94,8 @@ export class BoardService {
         this.httpOptions
       )
       .pipe(
-        tap((board) => {
-          this.selectedBoard.columns?.push(board);
+        tap((column) => {
+          this.selectedBoard.columns?.push({ ...column, tasks: [] });
         })
       );
   }
@@ -168,7 +167,7 @@ export class BoardService {
           );
 
           if (column) {
-            column.tasks ? column.tasks.push(task) : (column.tasks = [task]);
+            column.tasks?.push(task);
           }
         })
       );
@@ -195,8 +194,6 @@ export class BoardService {
       )
       .pipe(
         tap((res) => {
-          console.log('res', res);
-
           if (isChangingOrder) return;
 
           const column = this.selectedBoard.columns?.find(

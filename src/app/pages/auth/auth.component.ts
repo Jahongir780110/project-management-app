@@ -59,23 +59,25 @@ export class AuthComponent implements OnInit {
     }
 
     if (this.isSignup) {
-      return this.userService.createUser(this.form).subscribe((res) => {
-        if (res instanceof HttpErrorResponse) {
-          return this.showErrorAlert(res);
-        }
-
-        this.router.navigate(['/auth']);
+      return this.userService.createUser(this.form).subscribe({
+        next: () => {
+          this.router.navigate(['/auth']);
+        },
+        error: (err) => {
+          this.showErrorAlert(err);
+        },
       });
     }
 
     this.userService
       .signIn({ login: this.form.login, password: this.form.password })
-      .subscribe((res) => {
-        if (res instanceof HttpErrorResponse) {
-          return this.showErrorAlert(res);
-        }
-
-        this.router.navigate(['/boards']);
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/boards']);
+        },
+        error: (err) => {
+          this.showErrorAlert(err);
+        },
       });
   }
 

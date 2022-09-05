@@ -18,6 +18,7 @@
         <input
           type="text"
           class="form-control"
+          [ngClass]="titleError ? 'is-invalid' : ''"
           placeholder="Enter column title"
           #titleInput
           [(ngModel)]="columnTitle"
@@ -60,7 +61,7 @@
           <button
             ngbDropdownItem
             class="d-flex align-items-center text-secondary"
-            (click)="deleteColumn()"
+            (click)="openDialog()"
           >
             <fa-icon [icon]="faTrash"></fa-icon>
             <span class="text ms-2">Delete column</span>
@@ -102,10 +103,14 @@
       <input
         type="text"
         class="form-control"
+        [ngClass]="taskTitleError ? 'is-invalid' : ''"
         id="taskTitle"
         placeholder="Enter task title"
         [(ngModel)]="taskTitle"
       />
+      <div *ngIf="taskTitleError" class="text-danger input-error">
+        Please enter valid task title
+      </div>
     </div>
 
     <div class="mt-3">
@@ -113,10 +118,14 @@
       <input
         type="text"
         class="form-control"
+        [ngClass]="taskDescriptionError ? 'is-invalid' : ''"
         id="taskDescription"
         placeholder="Enter task description"
         [(ngModel)]="taskDescription"
       />
+      <div *ngIf="taskDescriptionError" class="text-danger input-error">
+        Please enter valid task description
+      </div>
     </div>
 
     <div class="mt-3">

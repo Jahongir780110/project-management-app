@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{ dialogTitle }}
+  </h4>
+</div>
+
+<div class="modal-body text-end">
+  <button
+    type="button"
+    class="btn btn-outline-secondary me-3"
+    (click)="closeDialog()"
+  >
+    Cancel
+  </button>
+
+  <button type="button" class="btn btn-outline-danger" (click)="delete()">
+    Delete
+  </button>
+</div>

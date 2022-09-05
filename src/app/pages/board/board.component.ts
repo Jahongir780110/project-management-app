@@ -12,6 +12,8 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 export class BoardComponent implements OnInit {
   title = '';
   boardId = '';
+  isLoading = false;
+  titleError = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,11 +24,20 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     const boardId = this.route.snapshot.paramMap.get('id') as string;
     this.boardId = boardId;
-    this.boardService.getBoard(boardId).subscribe();
+
+    this.isLoading = true;
+    this.boardService.getBoard(boardId).subscribe({
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 
   createColumn() {
+    this.titleError = false;
+
     if (this.title.trim().length === 0) {
+      this.titleError = true;
       return;
     }
 
@@ -40,9 +51,11 @@ export class BoardComponent implements OnInit {
       .result.then(
         () => {
           this.title = '';
+          this.titleError = false;
         },
         () => {
           this.title = '';
+          this.titleError = false;
         }
       );
   }

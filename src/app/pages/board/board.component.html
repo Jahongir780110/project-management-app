@@ -7,7 +7,12 @@
       }}</strong>
     </div>
 
+    <div *ngIf="isLoading" class="spinner">
+      <mat-spinner class="mx-auto" color="accent"></mat-spinner>
+    </div>
+
     <div
+      *ngIf="!isLoading"
       cdkDropList
       cdkDropListGroup
       cdkDropListOrientation="horizontal"
@@ -44,10 +49,14 @@
       <input
         type="text"
         class="form-control"
+        [ngClass]="titleError ? 'is-invalid' : ''"
         id="title"
         placeholder="Enter colun title"
         [(ngModel)]="title"
       />
+      <div *ngIf="titleError" class="text-danger input-error">
+        Please enter valid column title
+      </div>
     </div>
   </div>
 
