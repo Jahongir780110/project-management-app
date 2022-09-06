@@ -1,0 +1,56 @@
+<div class="auth">
+  <div class="form-wrapper text-white">
+    <h2 class="title text-center">{{ "login" | translate }}</h2>
+
+    <form class="form mt-4" (ngSubmit)="onSubmit($event)" #heroForm="ngForm">
+      <div class="login">
+        <label for="login" class="form-label"
+          >{{ "loginName" | translate }}:</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="loginError ? 'is-invalid' : ''"
+          id="login"
+          name="login"
+          [placeholder]="'enterLogin' | translate"
+          [(ngModel)]="form.login"
+        />
+        <div *ngIf="loginError" class="text-danger input-error">
+          {{ "pleaseEnterValidLogin" | translate }}
+        </div>
+      </div>
+
+      <div class="password mt-3">
+        <label for="password" class="form-label"
+          >{{ "password" | translate }}:</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          [ngClass]="passwordError ? 'is-invalid' : ''"
+          id="password"
+          name="password"
+          [placeholder]="'enterPassword' | translate"
+          [(ngModel)]="form.password"
+        />
+        <div *ngIf="passwordError" class="text-danger input-error">
+          {{ "pleaseEnterValidPassword" | translate }}
+        </div>
+      </div>
+
+      <div class="button-wrapper my-4 text-center">
+        <button type="submit" class="btn auth-btn">
+          {{ "login" | translate }}
+        </button>
+      </div>
+    </form>
+
+    <div class="auth-switch text-center">
+      <p class="mb-1">{{ "dontHaveAnAccount" | translate }}</p>
+      <a routerLink="/signup" class="auth-switch__btn">{{
+        "signup" | translate
+      }}</a>
+    </div>
+  </div>
+</div>

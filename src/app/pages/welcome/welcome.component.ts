@@ -23,7 +23,7 @@ export class WelcomeComponent implements OnInit {
 
   openBoards() {
     if (!this.userService.isAuthenticated) {
-      this.router.navigate(['/auth']);
+      this.router.navigate(['/login']);
     } else {
       this.router.navigate(['/boards']);
     }

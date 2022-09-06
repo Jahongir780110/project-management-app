@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -8,6 +9,7 @@ import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 })
 export class ConfirmDialogComponent implements OnInit {
   constructor(
+    private translateService: TranslateService,
     public dialogRef: DialogRef<string>,
     @Inject(DIALOG_DATA) public data: any
   ) {}
@@ -15,25 +17,24 @@ export class ConfirmDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   get dialogTitle() {
-    let title = 'Do you really want to delete the ';
+    let title = '';
 
     switch (this.data.type) {
       case 'board':
-        title += 'board';
+        title = 'deleteBoardPrompt';
         break;
       case 'user':
-        title += 'user';
+        title = 'deleteUserPrompt';
         break;
       case 'task':
-        title += 'task';
+        title = 'deleteTaskPrompt';
         break;
       case 'column':
-        title += 'column';
+        title = 'deleteColumnPrompt';
         break;
     }
 
-    title += '?';
-    return title;
+    return this.translateService.instant(title);
   }
 
   closeDialog() {

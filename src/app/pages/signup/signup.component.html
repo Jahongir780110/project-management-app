@@ -1,73 +1,72 @@
 <div class="auth">
   <div class="form-wrapper text-white">
-    <h2 class="title text-center">{{ isSignup ? "Sign up" : "Login" }}</h2>
+    <h2 class="title text-center">{{ "signup" | translate }}</h2>
 
     <form class="form mt-4" (ngSubmit)="onSubmit($event)" #heroForm="ngForm">
-      <div *ngIf="isSignup" class="name mb-3">
-        <label for="name" class="form-label">Name:</label>
+      <div class="name mb-3">
+        <label for="name" class="form-label">{{ "name" | translate }}:</label>
         <input
           type="text"
           class="form-control"
           [ngClass]="nameError ? 'is-invalid' : ''"
           id="name"
           name="name"
-          placeholder="Enter name"
+          [placeholder]="'enterName' | translate"
           [(ngModel)]="form.name"
         />
         <div *ngIf="nameError" class="text-danger input-error">
-          Please enter valid name
+          {{ "pleaseEnterValidName" | translate }}
         </div>
       </div>
 
       <div class="login">
-        <label for="login" class="form-label">Login:</label>
+        <label for="login" class="form-label"
+          >{{ "loginName" | translate }}:</label
+        >
         <input
           type="text"
           class="form-control"
           [ngClass]="loginError ? 'is-invalid' : ''"
           id="login"
           name="login"
-          placeholder="Enter login"
+          [placeholder]="'enterLogin' | translate"
           [(ngModel)]="form.login"
         />
         <div *ngIf="loginError" class="text-danger input-error">
-          Please enter valid login
+          {{ "pleaseEnterValidLogin" | translate }}
         </div>
       </div>
 
       <div class="password mt-3">
-        <label for="password" class="form-label">Password:</label>
+        <label for="password" class="form-label"
+          >{{ "password" | translate }}:</label
+        >
         <input
           type="password"
           class="form-control"
           [ngClass]="passwordError ? 'is-invalid' : ''"
           id="password"
           name="password"
-          placeholder="Enter password"
+          [placeholder]="'enterPassword' | translate"
           [(ngModel)]="form.password"
         />
         <div *ngIf="passwordError" class="text-danger input-error">
-          Please enter valid password
+          {{ "pleaseEnterValidPassword" | translate }}
         </div>
       </div>
 
       <div class="button-wrapper my-4 text-center">
         <button type="submit" class="btn auth-btn">
-          {{ isSignup ? "Sign up" : "Login" }}
+          {{ "signup" | translate }}
         </button>
       </div>
     </form>
 
     <div class="auth-switch text-center">
-      <p class="mb-1">
-        {{ isSignup ? "Already have an account?" : "Don't have an account?" }}
-      </p>
-      <a
-        [routerLink]="['/auth']"
-        [queryParams]="isSignup ? null : { signup: 'true' }"
-        class="auth-switch__btn"
-        >{{ !isSignup ? "Sign up" : "Login" }}</a
-      >
+      <p class="mb-1">{{ "alreadyHaveAnAccount" | translate }}</p>
+      <a routerLink="/login" class="auth-switch__btn">{{
+        "login" | translate
+      }}</a>
     </div>
   </div>
 </div>

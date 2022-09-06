@@ -8,32 +8,38 @@
 
       <div ngbDropdown class="lang-switch ms-sm-4 ms-2">
         <span id="dropdownBasic1" ngbDropdownToggle class="lang-select">
-          en
+          {{ currentLang }}
         </span>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="lang-menu">
-          <span ngbDropdownItem>en</span>
-          <span ngbDropdownItem>uz</span>
+          <span ngbDropdownItem (click)="changeLang('en-US')">en</span>
+          <span ngbDropdownItem (click)="changeLang('uz-UZ')">uz</span>
         </div>
       </div>
 
       <a
         *ngIf="userService.isAuthenticated"
         routerLink="/boards"
+        routerLinkActive="active"
         class="nav-link ms-sm-5 ms-2"
-        >Boards</a
+        >{{ "boards" | translate }}</a
       >
 
       <ul class="navbar-nav ms-auto text-white align-items-center flex-row">
         <li class="nav-item me-3">
           <a
             *ngIf="!userService.isAuthenticated; else user"
-            routerLink="/auth"
+            routerLink="/login"
+            routerLinkActive="active"
             class="nav-link"
-            >Login</a
+            >{{ "login" | translate }}</a
           >
 
           <ng-template #user>
-            <a routerLink="/edit-profile" class="nav-link">
+            <a
+              routerLink="/edit-profile"
+              routerLinkActive="active"
+              class="nav-link"
+            >
               <span *ngIf="userService.user" class="name me-2">{{
                 userService.user.name
               }}</span>
@@ -45,10 +51,10 @@
         <li class="nav-item ms-3">
           <a
             *ngIf="!userService.isAuthenticated; else logoutButton"
-            [routerLink]="['/auth']"
-            [queryParams]="{ signup: 'true' }"
+            routerLink="/signup"
+            routerLinkActive="active"
             class="nav-link"
-            >Sign up</a
+            >{{ "signup" | translate }}</a
           >
 
           <ng-template #logoutButton

@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthUser } from '../../models/authUser.model';
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css'],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css'],
 })
-export class AuthComponent implements OnInit {
-  isSignup = false;
+export class SignupComponent implements OnInit {
   form: AuthUser = {
     login: '',
     password: '',
@@ -22,21 +21,12 @@ export class AuthComponent implements OnInit {
   passwordError = false;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe((queryParams) => {
-      if (queryParams['signup']) {
-        this.isSignup = true;
-      } else {
-        this.isSignup = false;
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   onSubmit(e: Event): any {
     e.preventDefault();
@@ -45,7 +35,7 @@ export class AuthComponent implements OnInit {
     this.loginError = false;
     this.passwordError = false;
 
-    if (this.isSignup && !this.form.name?.trim().length) {
+    if (!this.form.name?.trim().length) {
       this.nameError = true;
       return;
     }
@@ -58,27 +48,14 @@ export class AuthComponent implements OnInit {
       return;
     }
 
-    if (this.isSignup) {
-      return this.userService.createUser(this.form).subscribe({
-        next: () => {
-          this.router.navigate(['/auth']);
-        },
-        error: (err) => {
-          this.showErrorAlert(err);
-        },
-      });
-    }
-
-    this.userService
-      .signIn({ login: this.form.login, password: this.form.password })
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/boards']);
-        },
-        error: (err) => {
-          this.showErrorAlert(err);
-        },
-      });
+    this.userService.createUser(this.form).subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        this.showErrorAlert(err);
+      },
+    });
   }
 
   showErrorAlert(res: HttpErrorResponse) {

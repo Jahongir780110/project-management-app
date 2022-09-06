@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { TranslateService } from '@ngx-translate/core';
 import { faTableColumns } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -15,9 +16,24 @@ export class HeaderComponent implements OnInit {
   faUser = faUser;
   faRightFromBracket = faRightFromBracket;
 
-  constructor(public userService: UserService, private router: Router) {}
+  constructor(
+    public userService: UserService,
+    private router: Router,
+    public translateService: TranslateService
+  ) {}
+
+  get currentLang() {
+    return (
+      this.translateService.currentLang?.split('-')[0] ||
+      this.translateService.getDefaultLang()?.split('-')[0]
+    );
+  }
 
   ngOnInit(): void {}
+
+  changeLang(value: string) {
+    this.translateService.use(value);
+  }
 
   logout() {
     this.userService.logout();

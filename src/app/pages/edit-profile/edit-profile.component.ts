@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
+import { TranslateService } from '@ngx-translate/core';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { Dialog } from '@angular/cdk/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -29,6 +30,7 @@ export class EditProfileComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private snackBar: MatSnackBar,
+    private translateService: TranslateService,
     public dialog: Dialog
   ) {}
 
@@ -52,9 +54,10 @@ export class EditProfileComponent implements OnInit {
   }
 
   delete() {
+    const message: string = this.translateService.instant('deleteUserSuccess');
     this.userService.deleteUser().subscribe({
       next: () => {
-        this.showSuccessAlert('User successfully deleted!');
+        this.showSuccessAlert(message);
         setTimeout(() => {
           this.router.navigate(['/']);
         }, 3000);
@@ -90,9 +93,11 @@ export class EditProfileComponent implements OnInit {
       return;
     }
 
+    const message: string = this.translateService.instant('userEditSuccess');
+
     this.userService.editProfile(this.form).subscribe({
       next: () => {
-        this.showSuccessAlert('User successfully edited!');
+        this.showSuccessAlert(message);
       },
       error: (err) => {
         this.showErrorAlert(err);

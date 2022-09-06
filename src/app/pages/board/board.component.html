@@ -1,7 +1,7 @@
 <div class="board">
   <div class="container py-4">
     <div class="title">
-      Board title:
+      {{ "boardTitle" | translate }}:
       <strong *ngIf="boardService.selectedBoard">{{
         boardService.selectedBoard.title
       }}</strong>
@@ -32,7 +32,7 @@
       ></app-column>
 
       <button class="btn add-column-btn" (click)="open(content)">
-        + Add column
+        + {{ "addColumn" | translate }}
       </button>
     </div>
   </div>
@@ -40,22 +40,26 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Create a column</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ "createColumn" | translate }}
+    </h4>
   </div>
 
   <div class="modal-body">
     <div>
-      <label for="title" class="form-label">Column title:</label>
+      <label for="title" class="form-label"
+        >{{ "columnTitle" | translate }}:</label
+      >
       <input
         type="text"
         class="form-control"
         [ngClass]="titleError ? 'is-invalid' : ''"
         id="title"
-        placeholder="Enter colun title"
+        [placeholder]="'enterColumnTitle' | translate"
         [(ngModel)]="title"
       />
       <div *ngIf="titleError" class="text-danger input-error">
-        Please enter valid column title
+        {{ "pleaseEnterValidColumnTitle" | translate }}
       </div>
     </div>
   </div>
@@ -66,14 +70,14 @@
       class="btn btn-outline-secondary"
       (click)="modal.close()"
     >
-      Cancel
+      {{ "cancel" | translate }}
     </button>
     <button
       type="button"
       class="btn btn-outline-primary"
       (click)="createColumn()"
     >
-      Ok
+      {{ "ok" | translate }}
     </button>
   </div>
 </ng-template>

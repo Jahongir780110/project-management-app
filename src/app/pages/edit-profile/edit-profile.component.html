@@ -1,69 +1,75 @@
 <div class="edit-profile">
   <div class="form-wrapper text-white">
-    <h2 class="title text-center">Edit profile</h2>
+    <h2 class="title text-center">{{ "editProfile" | translate }}</h2>
 
     <form class="form mt-4" (ngSubmit)="onSubmit($event)" #heroForm="ngForm">
       <div class="name mb-3">
-        <label for="name" class="form-label">Name:</label>
+        <label for="name" class="form-label">{{ "name" | translate }}:</label>
         <input
           type="text"
           class="form-control"
           [ngClass]="nameError ? 'is-invalid' : ''"
           id="name"
           name="name"
-          placeholder="Enter name"
+          [placeholder]="'enterName' | translate"
           [(ngModel)]="form.name"
         />
         <div *ngIf="nameError" class="text-danger input-error">
-          Please enter valid name
+          {{ "pleaseEnterValidName" | translate }}
         </div>
       </div>
 
       <div class="login">
-        <label for="login" class="form-label">Login:</label>
+        <label for="login" class="form-label"
+          >{{ "loginName" | translate }}:</label
+        >
         <input
           type="text"
           class="form-control"
           [ngClass]="loginError ? 'is-invalid' : ''"
           id="login"
           name="login"
-          placeholder="Enter login"
+          [placeholder]="'enterLogin' | translate"
           [(ngModel)]="form.login"
         />
         <div *ngIf="loginError" class="text-danger input-error">
-          Please enter valid login
+          {{ "pleaseEnterValidLogin" | translate }}
         </div>
       </div>
 
       <div class="password mt-3">
-        <label for="password" class="form-label">Password:</label>
+        <label for="password" class="form-label"
+          >{{ "password" | translate }}:</label
+        >
         <input
           type="password"
           class="form-control"
           [ngClass]="passwordError ? 'is-invalid' : ''"
           id="password"
           name="password"
-          placeholder="Enter password"
+          [placeholder]="'enterPassword' | translate"
           [(ngModel)]="form.password"
         />
         <div *ngIf="passwordError" class="text-danger input-error">
-          Please enter valid password
+          {{ "pleaseEnterValidPassword" | translate }}
         </div>
       </div>
 
       <div class="repeat-password mt-3">
-        <label for="repeat-password" class="form-label">Repeat password:</label>
+        <label for="repeat-password" class="form-label"
+          >{{ "repeatPassword" | translate }}:</label
+        >
         <input
           type="password"
           class="form-control"
           [ngClass]="repeatPasswordError ? 'is-invalid' : ''"
           id="repeat-password"
           name="password"
-          placeholder="Confirm password"
+          [placeholder]="'confirmPassword' | translate"
           [(ngModel)]="repeatPassword"
         />
         <div *ngIf="repeatPasswordError" class="text-danger input-error">
-          Passwords do not match
+          {{ "passwordsMismatch" | translate }}
         </div>
       </div>
 
@@ -73,9 +79,11 @@
           class="btn btn-danger me-4"
           (click)="openDialog()"
         >
-          Delete
+          {{ "delete" | translate }}
         </button>
-        <button type="submit" class="btn btn-success">Edit</button>
+        <button type="submit" class="btn btn-success">
+          {{ "edit" | translate }}
+        </button>
       </div>
     </form>
   </div>

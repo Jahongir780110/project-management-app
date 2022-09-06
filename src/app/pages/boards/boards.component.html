@@ -1,11 +1,15 @@
 <div class="boards py-4">
   <div class="container">
     <div class="input-group search">
-      <input type="text" class="form-control" placeholder="Search..." />
-      <span class="input-group-text">Search</span>
+      <input
+        type="text"
+        class="form-control"
+        [placeholder]="('search' | translate) + '...'"
+      />
+      <span class="input-group-text">{{ "search" | translate }}</span>
     </div>
 
-    <h1 class="title text-center mt-4">Your Boards</h1>
+    <h1 class="title text-center mt-4">{{ "yourBoards" | translate }}</h1>
 
     <div *ngIf="isLoading" class="spinner">
       <mat-spinner class="mx-auto" color="accent"></mat-spinner>
@@ -37,7 +41,7 @@
           <div
             class="card-body d-flex align-items-center justify-content-center"
           >
-            <h3 class="text-secondary">+ Create new board</h3>
+            <h3 class="text-secondary">+ {{ "createNewBoard" | translate }}</h3>
           </div>
         </div>
       </div>
@@ -47,37 +51,43 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Create a board</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ "createBoard" | translate }}
+    </h4>
   </div>
 
   <div class="modal-body">
     <div>
-      <label for="title" class="form-label">Board title:</label>
+      <label for="title" class="form-label"
+        >{{ "boardTitle" | translate }}:</label
+      >
       <input
         type="text"
         class="form-control"
         [ngClass]="titleError ? 'is-invalid' : ''"
         id="title"
-        placeholder="Enter board title"
+        [placeholder]="'enterBoardTitle' | translate"
         [(ngModel)]="title"
       />
       <div *ngIf="titleError" class="text-danger input-error">
-        Please enter valid board title
+        {{ "pleaseEnterValidBoardTitle" | translate }}
       </div>
     </div>
 
     <div class="mt-3">
-      <label for="description" class="form-label">Board description:</label>
+      <label for="description" class="form-label"
+        >{{ "boardDescription" | translate }}:</label
+      >
       <input
         type="text"
         class="form-control"
         [ngClass]="descriptionError ? 'is-invalid' : ''"
         id="description"
-        placeholder="Enter board description"
+        [placeholder]="'enterBoardDescription' | translate"
         [(ngModel)]="description"
       />
       <div *ngIf="descriptionError" class="text-danger input-error">
-        Please enter valid board description
+        {{ "pleaseEnterValidBoardDescription" | translate }}
       </div>
     </div>
   </div>
@@ -88,7 +98,7 @@
       class="btn btn-outline-secondary"
       (click)="modal.close()"
     >
-      Cancel
+      {{ "cancel" | translate }}
     </button>
 
     <button
@@ -96,7 +106,7 @@
       class="btn btn-outline-primary"
       (click)="createBoard()"
     >
-      Ok
+      {{ "ok" | translate }}
     </button>
   </div>
 </ng-template>
