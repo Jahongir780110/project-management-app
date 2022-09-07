@@ -26,6 +26,9 @@
 .auth-btn:hover {
   opacity: 0.9;
 }
+.aut-btn:disabled {
+  cursor: no-drop;
+}
 
 .auth-switch__btn {
   text-decoration: none;

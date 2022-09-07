@@ -1,9 +1,9 @@
-<div class="edit-profile">
+<div class="auth">
   <div class="form-wrapper text-white">
-    <h2 class="title text-center">{{ "editProfile" | translate }}</h2>
+    <h2 class="title text-center">{{ type | translate }}</h2>
 
     <form class="form mt-4" (ngSubmit)="onSubmit($event)" #heroForm="ngForm">
-      <div class="name mb-3">
+      <div *ngIf="type !== 'login'" class="name mb-3">
         <label for="name" class="form-label">{{ "name" | translate }}:</label>
         <input
           type="text"
@@ -55,7 +55,7 @@
         </div>
       </div>
 
-      <div class="repeat-password mt-3">
+      <div *ngIf="type === 'editProfile'" class="repeat-password mt-3">
         <label for="repeat-password" class="form-label"
           >{{ "repeatPassword" | translate }}:</label
         >
@@ -73,7 +73,19 @@
         </div>
       </div>
 
-      <div class="button-wrapper my-4 text-center">
+      <div
+        *ngIf="type !== 'editProfile'"
+        class="button-wrapper my-4 text-center"
+      >
+        <button type="submit" class="btn auth-btn" [disabled]="isLoading">
+          {{ type | translate }}
+        </button>
+      </div>
+
+      <div
+        *ngIf="type === 'editProfile'"
+        class="button-wrapper my-4 text-center"
+      >
         <button
           type="button"
           class="btn btn-danger me-4"
@@ -86,5 +98,19 @@
         </button>
       </div>
     </form>
+
+    <div *ngIf="type === 'login'" class="auth-switch text-center">
+      <p class="mb-1">{{ "dontHaveAnAccount" | translate }}</p>
+      <a routerLink="/signup" class="auth-switch__btn">{{
+        "signup" | translate
+      }}</a>
+    </div>
+
+    <div *ngIf="type === 'signup'" class="auth-switch text-center">
+      <p class="mb-1">{{ "alreadyHaveAnAccount" | translate }}</p>
+      <a routerLink="/login" class="auth-switch__btn">{{
+        "login" | translate
+      }}</a>
+    </div>
   </div>
 </div>

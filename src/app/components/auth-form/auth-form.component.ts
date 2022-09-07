@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,11 +9,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthUser } from '../../models/authUser.model';
 
 @Component({
-  selector: 'app-edit-profile',
-  templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.css'],
+  selector: 'app-auth-form',
+  templateUrl: './auth-form.component.html',
+  styleUrls: ['./auth-form.component.css'],
 })
-export class EditProfileComponent implements OnInit {
+export class AuthFormComponent implements OnInit {
+  type = '';
+
   form: AuthUser = {
     login: '',
     password: '',
@@ -25,18 +27,26 @@ export class EditProfileComponent implements OnInit {
   loginError = false;
   passwordError = false;
   repeatPasswordError = false;
+  isLoading = false;
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private userService: UserService,
-    private snackBar: MatSnackBar,
     private translateService: TranslateService,
+    private snackBar: MatSnackBar,
     public dialog: Dialog
   ) {}
 
   ngOnInit(): void {
-    this.form.name = this.userService.user.name;
-    this.form.login = this.userService.user.login;
+    if (this.type === 'editProfile') {
+      this.form.name = this.userService.user.name;
+      this.form.login = this.userService.user.login;
+    }
+
+    this.route.data.subscribe((val) => {
+      this.type = val['type'];
+    });
   }
 
   openDialog(): void {
@@ -48,13 +58,14 @@ export class EditProfileComponent implements OnInit {
 
     dialogRef.closed.subscribe((message) => {
       if (message) {
-        this.delete();
+        this.deleteUser();
       }
     });
   }
 
-  delete() {
+  deleteUser() {
     const message: string = this.translateService.instant('deleteUserSuccess');
+
     this.userService.deleteUser().subscribe({
       next: () => {
         this.showSuccessAlert(message);
@@ -76,7 +87,7 @@ export class EditProfileComponent implements OnInit {
     this.passwordError = false;
     this.repeatPasswordError = false;
 
-    if (!this.form.name?.trim().length) {
+    if (this.type !== 'login' && !this.form.name?.trim().length) {
       this.nameError = true;
       return;
     }
@@ -88,21 +99,50 @@ export class EditProfileComponent implements OnInit {
       this.passwordError = true;
       return;
     }
-    if (this.form.password.trim() !== this.repeatPassword) {
+    if (
+      this.type === 'editProfile' &&
+      this.form.password.trim() !== this.repeatPassword
+    ) {
       this.repeatPasswordError = true;
       return;
     }
 
-    const message: string = this.translateService.instant('userEditSuccess');
+    this.isLoading = true;
 
-    this.userService.editProfile(this.form).subscribe({
-      next: () => {
-        this.showSuccessAlert(message);
-      },
-      error: (err) => {
-        this.showErrorAlert(err);
-      },
-    });
+    if (this.type === 'login') {
+      this.userService
+        .signIn({ login: this.form.login, password: this.form.password })
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/boards']);
+          },
+          error: (err) => {
+            this.isLoading = false;
+            this.showErrorAlert(err);
+          },
+        });
+    } else if (this.type === 'signup') {
+      this.userService.createUser(this.form).subscribe({
+        next: () => {
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.showErrorAlert(err);
+        },
+      });
+    } else if (this.type === 'editProfile') {
+      const message: string = this.translateService.instant('userEditSuccess');
+
+      this.userService.editProfile(this.form).subscribe({
+        next: () => {
+          this.showSuccessAlert(message);
+        },
+        error: (err) => {
+          this.showErrorAlert(err);
+        },
+      });
+    }
   }
 
   showErrorAlert(res: HttpErrorResponse) {

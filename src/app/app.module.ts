@@ -25,10 +25,8 @@ import { BoardsComponent } from './pages/boards/boards.component';
 import { BoardComponent } from './pages/board/board.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
-import { LoginComponent } from './pages/login/login.component';
-import { SignupComponent } from './pages/signup/signup.component';
-import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { AuthFormComponent } from './components/auth-form/auth-form.component';
 
 import { Router } from '@angular/router';
 import { UnauthorisedErrorInterceptor } from './interceptors/unauthorised-error.interceptor';
@@ -48,10 +46,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     BoardComponent,
     ColumnComponent,
     TaskComponent,
-    EditProfileComponent,
     ConfirmDialogComponent,
-    LoginComponent,
-    SignupComponent,
+    AuthFormComponent,
   ],
   imports: [
     BrowserModule,
