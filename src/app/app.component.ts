@@ -18,12 +18,12 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const lang = localStorage.getItem('lang');
     const token = localStorage.getItem('token');
     let user;
     if (localStorage.getItem('user')) {
       user = JSON.parse(localStorage.getItem('user') || '');
     }
-    const lang = localStorage.getItem('lang');
 
     if (lang) {
       this.translateService.use(lang);

@@ -66,16 +66,10 @@ export class BoardsComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         () => {
-          this.title = '';
-          this.description = '';
-          this.titleError = false;
-          this.descriptionError = false;
+          this.initializeForm();
         },
         () => {
-          this.title = '';
-          this.description = '';
-          this.titleError = false;
-          this.descriptionError = false;
+          this.initializeForm();
         }
       );
   }
@@ -96,5 +90,12 @@ export class BoardsComponent implements OnInit {
         this.deleteBoard(id);
       }
     });
+  }
+
+  initializeForm() {
+    this.title = '';
+    this.description = '';
+    this.titleError = false;
+    this.descriptionError = false;
   }
 }

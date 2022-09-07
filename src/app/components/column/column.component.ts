@@ -56,6 +56,7 @@ export class ColumnComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe();
+
     const column = this.boardService.selectedBoard.columns?.find(
       (col) => col.id === this.id
     );
@@ -159,20 +160,10 @@ export class ColumnComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         () => {
-          this.taskTitle = '';
-          this.taskDescription = '';
-          this.taskUserId = '';
-          this.isEditingTask = false;
-          this.taskTitleError = false;
-          this.taskDescriptionError = false;
+          this.initializeForm();
         },
         () => {
-          this.taskTitle = '';
-          this.taskDescription = '';
-          this.taskUserId = '';
-          this.isEditingTask = false;
-          this.taskTitleError = false;
-          this.taskDescriptionError = false;
+          this.initializeForm();
         }
       );
   }
@@ -192,8 +183,6 @@ export class ColumnComponent implements OnInit {
   }
 
   drop(event: any) {
-    console.log('editedTask', event.item.data);
-
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -216,8 +205,6 @@ export class ColumnComponent implements OnInit {
         event.currentIndex
       );
 
-      console.log(event.container.id);
-
       this.boardService
         .editTask(
           event.previousContainer.id,
@@ -231,5 +218,14 @@ export class ColumnComponent implements OnInit {
         )
         .subscribe();
     }
+  }
+
+  initializeForm() {
+    this.taskTitle = '';
+    this.taskDescription = '';
+    this.taskUserId = '';
+    this.isEditingTask = false;
+    this.taskTitleError = false;
+    this.taskDescriptionError = false;
   }
 }

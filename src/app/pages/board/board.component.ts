@@ -50,12 +50,10 @@ export class BoardComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         () => {
-          this.title = '';
-          this.titleError = false;
+          this.initializeForm();
         },
         () => {
-          this.title = '';
-          this.titleError = false;
+          this.initializeForm();
         }
       );
   }
@@ -74,5 +72,10 @@ export class BoardComponent implements OnInit {
         event.item.data.title
       )
       .subscribe();
+  }
+
+  initializeForm() {
+    this.title = '';
+    this.titleError = false;
   }
 }

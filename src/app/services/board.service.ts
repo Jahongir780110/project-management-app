@@ -41,8 +41,6 @@ export class BoardService {
       .get<Board>(`${this.baseUrl}/boards/${id}`, this.httpOptions)
       .pipe(
         tap((board) => {
-          console.log('board', board);
-
           this.selectedBoard = board;
 
           this.selectedBoard.columns?.sort((a, b) =>

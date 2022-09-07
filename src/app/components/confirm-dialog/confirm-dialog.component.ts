@@ -42,14 +42,20 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   delete() {
-    if (this.data.type === 'board') {
-      this.dialogRef.close(this.data.id);
-    } else if (this.data.type === 'user') {
-      this.dialogRef.close('delete');
-    } else if (this.data.type === 'task') {
-      this.dialogRef.close('delete');
-    } else if (this.data.type === 'column') {
-      this.dialogRef.close('delete');
+    const type = this.data.type;
+    switch (type) {
+      case 'board':
+        this.dialogRef.close(this.data.id);
+        break;
+      case 'user':
+        this.dialogRef.close('delete');
+        break;
+      case 'task':
+        this.dialogRef.close('delete');
+        break;
+      case 'column':
+        this.dialogRef.close('column');
+        break;
     }
   }
 }
