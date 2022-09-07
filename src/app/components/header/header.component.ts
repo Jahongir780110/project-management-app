@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
 
   changeLang(value: string) {
     this.translateService.use(value);
+    localStorage.setItem('lang', value);
   }
 
   logout() {

@@ -39,13 +39,17 @@ export class AuthFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.type === 'editProfile') {
-      this.form.name = this.userService.user.name;
-      this.form.login = this.userService.user.login;
-    }
-
     this.route.data.subscribe((val) => {
       this.type = val['type'];
+
+      if (this.type === 'editProfile') {
+        if (!this.userService.isAuthenticated) {
+          this.router.navigate(['/login']);
+        } else {
+          this.form.name = this.userService.user.name;
+          this.form.login = this.userService.user.login;
+        }
+      }
     });
   }
 
