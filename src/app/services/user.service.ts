@@ -84,6 +84,7 @@ export class UserService {
       .pipe(
         tap((user) => {
           this.user = user;
+          localStorage.setItem('user', JSON.stringify(user));
         })
       );
   }
