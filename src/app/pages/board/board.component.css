@@ -1,5 +1,5 @@
 .board {
-  height: calc(100vh - 100px);
+  height: calc(100% - 160px);
 }
 
 .board .container {
@@ -26,9 +26,10 @@
 .columns {
   column-gap: 12px;
   width: 100%;
-  height: calc(100% - 78px);
+  height: calc(100% - 30px);
   overflow-x: auto;
-  padding-bottom: 8px;
+  padding-top: 24px;
+  padding-bottom: 12px;
 }
 
 .cdk-drag-preview {

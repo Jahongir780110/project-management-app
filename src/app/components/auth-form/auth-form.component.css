@@ -1,5 +1,5 @@
 .auth {
-  min-height: 100vh;
+  min-height: calc(100% - 160px);
   background-color: #252934;
   display: flex;
   justify-content: center;
@@ -10,9 +10,15 @@
 
 .form-wrapper {
   width: 450px;
+  max-width: 94%;
   background-color: #1e242c;
   padding: 24px 32px;
   border-radius: 12px;
+}
+@media (max-width: 420px) {
+  .form-wrapper {
+    padding: 24px 12px;
+  }
 }
 
 .auth-btn {

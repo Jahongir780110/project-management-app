@@ -1,12 +1,12 @@
 <header class="header">
   <nav class="navbar">
     <div class="container justify-content-start align-items-center">
-      <a routerLink="/" class="navbar-brand d-flex align-items-center">
+      <a routerLink="/" class="navbar-brand d-flex align-items-center me-0">
         <fa-icon [icon]="faTableColumns"></fa-icon>
         <span class="logo-text ms-2 d-sm-inline-block d-none">PMA</span>
       </a>
 
-      <div ngbDropdown class="lang-switch ms-sm-4 ms-2">
+      <div ngbDropdown class="lang-switch ms-sm-4 ms-3">
         <span id="dropdownBasic1" ngbDropdownToggle class="lang-select">
           {{ currentLang }}
         </span>
@@ -20,7 +20,7 @@
         *ngIf="userService.isAuthenticated"
         routerLink="/boards"
         routerLinkActive="active"
-        class="nav-link ms-sm-5 ms-2"
+        class="nav-link ms-sm-5 ms-3"
         >{{ "boards" | translate }}</a
       >
 

@@ -18,6 +18,7 @@ export class BoardsComponent implements OnInit {
   titleError = false;
   descriptionError = false;
   isLoading = false;
+  search = '';
 
   constructor(
     private modalService: NgbModal,
@@ -25,6 +26,16 @@ export class BoardsComponent implements OnInit {
     public userService: UserService,
     public dialog: Dialog
   ) {}
+
+  get filteredBoards() {
+    if (this.search.trim().length === 0) {
+      return this.boardService.boards;
+    }
+    return this.boardService.boards.filter(
+      (b) =>
+        b.title.includes(this.search) || b.description.includes(this.search)
+    );
+  }
 
   ngOnInit(): void {
     this.isLoading = true;

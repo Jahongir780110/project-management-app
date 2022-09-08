@@ -20,7 +20,7 @@
         boardService.selectedBoard ? boardService.selectedBoard.columns : []
       "
       (cdkDropListDropped)="drop($event)"
-      class="columns mt-4 d-flex align-items-start"
+      class="columns d-flex align-items-start"
     >
       <app-column
         *ngFor="let column of boardService.selectedBoard?.columns"

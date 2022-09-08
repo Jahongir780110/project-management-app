@@ -5,6 +5,7 @@
         type="text"
         class="form-control"
         [placeholder]="('search' | translate) + '...'"
+        [(ngModel)]="search"
       />
       <span class="input-group-text">{{ "search" | translate }}</span>
     </div>
@@ -16,7 +17,10 @@
     </div>
 
     <div class="row boards-list mt-4">
-      <div *ngFor="let board of boardService.boards" class="col-4 mb-3">
+      <div
+        *ngFor="let board of filteredBoards"
+        class="col-md-4 col-sm-6 col-10 mx-sm-0 mx-auto mb-3"
+      >
         <a [routerLink]="[board.id]">
           <div class="card board-card">
             <div
@@ -36,7 +40,7 @@
         </a>
       </div>
 
-      <div class="col-4">
+      <div class="col-md-4 col-sm-6 col-10 mx-sm-0 mx-auto">
         <div class="card board-card" (click)="open(content)">
           <div
             class="card-body d-flex align-items-center justify-content-center"
