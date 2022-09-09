@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BoardService } from '../../services/board.service';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { Dialog } from '@angular/cdk/dialog';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Task } from '../../models/task.model';
 
@@ -13,7 +14,7 @@ import { Task } from '../../models/task.model';
 export class TaskComponent implements OnInit {
   faXmark = faXmark;
 
-  constructor(private boardService: BoardService, public dialog: Dialog) {}
+  constructor(private boardService: BoardService, private dialog: Dialog) {}
 
   ngOnInit(): void {}
 

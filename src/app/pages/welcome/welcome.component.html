@@ -6,13 +6,16 @@
           <h1 class="title">
             {{ "welcomeAboutTitle" | translate }}
           </h1>
+
           <h5 class="subtitle mt-4">
             {{ "welcomeAboutSubtitle" | translate }}
           </h5>
+
           <button class="btn tryItButton mt-3" (click)="openBoards()">
             {{ "tryIt" | translate }}
           </button>
         </div>
+
         <div class="col-md-6 col-12 about-image mt-md-0 mt-4">
           <img src="../../assets/team-board.webp" alt="team kanban board" />
         </div>
@@ -27,13 +30,16 @@
           {{ "welcomeInfoTitle" | translate }}
         </h1>
       </div>
+
       <p class="content text-center px-5 mt-4">
         {{ "welcomeInfoSubtitle" | translate }}
       </p>
+
       <div class="row d-flex align-items-center px-5 mt-5">
         <div class="col-md-6 col-12 info-image">
           <img src="../../assets/office-worker.jpg" alt="office worker" />
         </div>
+
         <div class="col-md-6 col-12 info-text pl-1 py-1 mt-md-0 mt-3">
           <h5>
             {{ "welcomeInfoText" | translate }}
@@ -56,11 +62,15 @@
       </h4>
 
       <div class="benefits-list d-flex flex-column mt-5">
-        <div class="benefit w-50">{{ "welcomeBenefitOne" | translate }}</div>
+        <div class="benefit w-50">
+          {{ "welcomeBenefitOne" | translate }}
+        </div>
         <div class="benefit w-50 right">
           {{ "welcomeBenefitTwo" | translate }}
         </div>
-        <div class="benefit w-50">{{ "welcomeBenefitThree" | translate }}</div>
+        <div class="benefit w-50">
+          {{ "welcomeBenefitThree" | translate }}
+        </div>
         <div class="benefit w-50 right">
           {{ "welcomeBenefitFour" | translate }}
         </div>
@@ -95,6 +105,7 @@
 
       <div class="rs-info mt-5">
         <h2>{{ "welcomeRSSForTitle" | translate }}</h2>
+
         <h5 class="mt-3">
           {{ "welcomeRSSForSubtitle" | translate }}
         </h5>
@@ -103,35 +114,42 @@
       <div class="rs-features mt-5">
         <div class="row">
           <div class="col-sm-6 col-12 feature d-flex">
-            <fa-icon [icon]="faSackDollar" class="github-logo"></fa-icon>
-            <div class="containt">
+            <fa-icon [icon]="faSackDollar" class="feature-icon"></fa-icon>
+
+            <div class="content">
               <h3>{{ "welcomeRSSFeatureOneTitle" | translate }}</h3>
               <p>
                 {{ "welcomeRSSFeatureOneSubtitle" | translate }}
               </p>
             </div>
           </div>
+
           <div class="col-sm-6 col-12 feature d-flex mt-sm-0 mt-3">
-            <fa-icon [icon]="faClock" class="github-logo"></fa-icon>
-            <div class="containt">
+            <fa-icon [icon]="faClock" class="feature-icon"></fa-icon>
+
+            <div class="content">
               <h3>{{ "welcomeRSSFeatureTwoTitle" | translate }}</h3>
               <p>
                 {{ "welcomeRSSFeatureTwoSubtitle" | translate }}
               </p>
             </div>
           </div>
+
           <div class="col-sm-6 col-12 feature d-flex mt-sm-0 mt-3">
-            <fa-icon [icon]="faUserGroup" class="github-logo"></fa-icon>
-            <div class="containt">
+            <fa-icon [icon]="faUserGroup" class="feature-icon"></fa-icon>
+
+            <div class="content">
               <h3>{{ "welcomeRSSFeatureThreeTitle" | translate }}</h3>
               <p>
                 {{ "welcomeRSSFeatureThreeSubtitle" | translate }}
               </p>
             </div>
           </div>
+
           <div class="col-sm-6 col-12 feature d-flex mt-sm-0 mt-3">
-            <fa-icon [icon]="faCertificate" class="github-logo"></fa-icon>
-            <div class="containt">
+            <fa-icon [icon]="faCertificate" class="feature-icon"></fa-icon>
+
+            <div class="content">
               <h3>{{ "welcomeRSSFeatureFourTitle" | translate }}</h3>
               <p>
                 {{ "welcomeRSSFeatureFourSubtitle" | translate }}
@@ -161,6 +179,7 @@
               {{ "welcomeAuthorInfo" | translate }}
             </div>
           </div>
+
           <div class="col-md-6 col-12 author-info__image mt-md-0 mt-3">
             <img
               src="../../assets/guy-coding.gif"

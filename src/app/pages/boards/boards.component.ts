@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { BoardService } from 'src/app/services/board.service';
-import { UserService } from 'src/app/services/user.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Dialog } from '@angular/cdk/dialog';
+import { UserService } from 'src/app/services/user.service';
+import { BoardService } from 'src/app/services/board.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -12,25 +12,26 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./boards.component.css'],
 })
 export class BoardsComponent implements OnInit {
-  faXmark = faXmark;
   title = '';
   description = '';
   titleError = false;
   descriptionError = false;
-  isLoading = false;
   search = '';
+  isLoading = false;
+
+  faXmark = faXmark;
 
   constructor(
     private modalService: NgbModal,
-    public boardService: BoardService,
-    public userService: UserService,
-    public dialog: Dialog
+    private boardService: BoardService,
+    private dialog: Dialog
   ) {}
 
   get filteredBoards() {
     if (this.search.trim().length === 0) {
       return this.boardService.boards;
     }
+
     return this.boardService.boards.filter(
       (b) =>
         b.title.includes(this.search) || b.description.includes(this.search)
@@ -39,6 +40,7 @@ export class BoardsComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
+
     this.boardService.getAllBoards().subscribe({
       complete: () => {
         this.isLoading = false;
@@ -72,7 +74,7 @@ export class BoardsComponent implements OnInit {
     });
   }
 
-  open(content: any) {
+  openModalWindow(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(

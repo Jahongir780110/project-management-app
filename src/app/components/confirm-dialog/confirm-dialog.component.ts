@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ConfirmDialogComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
-    public dialogRef: DialogRef<string>,
+    private dialogRef: DialogRef<string>,
     @Inject(DIALOG_DATA) public data: any
   ) {}
 

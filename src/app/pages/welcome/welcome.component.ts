@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+
 import { faSackDollar } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { faUserGroup } from '@fortawesome/free-solid-svg-icons';
@@ -17,15 +18,15 @@ export class WelcomeComponent implements OnInit {
   faUserGroup = faUserGroup;
   faCertificate = faCertificate;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {}
 
-  openBoards() {
+  openBoards(): any {
     if (!this.userService.isAuthenticated) {
-      this.router.navigate(['/login']);
-    } else {
-      this.router.navigate(['/boards']);
+      return this.router.navigate(['/login']);
     }
+
+    this.router.navigate(['/boards']);
   }
 }

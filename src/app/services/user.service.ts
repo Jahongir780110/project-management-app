@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
 import { environment } from '../../environments/environment';
+
 import { AuthUser } from '../models/authUser.model';
 import { User } from '../models/user.model';
 
@@ -30,14 +31,6 @@ export class UserService {
     };
   }
 
-  getDecodedAccessToken(token: string): any {
-    try {
-      return jwt_decode(token);
-    } catch (Error) {
-      return null;
-    }
-  }
-
   createUser(authUser: AuthUser) {
     return this.http
       .post<User>(`${this.baseUrl}/signup`, authUser, this.httpOptions)
@@ -59,6 +52,7 @@ export class UserService {
         tap((res) => {
           this.token = res.token;
           localStorage.setItem('token', this.token);
+
           const tokenInfo = this.getDecodedAccessToken(this.token);
 
           this.http
@@ -122,5 +116,13 @@ export class UserService {
           this.users = users;
         })
       );
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (error) {
+      return null;
+    }
   }
 }

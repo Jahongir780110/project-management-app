@@ -7,6 +7,7 @@
         [placeholder]="('search' | translate) + '...'"
         [(ngModel)]="search"
       />
+
       <span class="input-group-text">{{ "search" | translate }}</span>
     </div>
 
@@ -41,7 +42,7 @@
       </div>
 
       <div class="col-md-4 col-sm-6 col-10 mx-sm-0 mx-auto">
-        <div class="card board-card" (click)="open(content)">
+        <div class="card board-card" (click)="openModalWindow(content)">
           <div
             class="card-body d-flex align-items-center justify-content-center"
           >
@@ -65,6 +66,7 @@
       <label for="title" class="form-label"
         >{{ "boardTitle" | translate }}:</label
       >
+
       <input
         type="text"
         class="form-control"
@@ -73,6 +75,7 @@
         [placeholder]="'enterBoardTitle' | translate"
         [(ngModel)]="title"
       />
+
       <div *ngIf="titleError" class="text-danger input-error">
         {{ "pleaseEnterValidBoardTitle" | translate }}
       </div>
@@ -82,6 +85,7 @@
       <label for="description" class="form-label"
         >{{ "boardDescription" | translate }}:</label
       >
+
       <input
         type="text"
         class="form-control"
@@ -90,6 +94,7 @@
         [placeholder]="'enterBoardDescription' | translate"
         [(ngModel)]="description"
       />
+
       <div *ngIf="descriptionError" class="text-danger input-error">
         {{ "pleaseEnterValidBoardDescription" | translate }}
       </div>

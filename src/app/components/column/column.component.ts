@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { BoardService } from 'src/app/services/board.service';
 import { UserService } from 'src/app/services/user.service';
+import { BoardService } from 'src/app/services/board.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { Dialog } from '@angular/cdk/dialog';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import {
   faTrash,
@@ -27,17 +28,17 @@ export class ColumnComponent implements OnInit {
   faXmark = faXmark;
   faCheck = faCheck;
 
+  column!: Column;
+  editedTask!: Task;
+  columnTitle = '';
   taskTitle = '';
   taskDescription = '';
   taskUserId = '';
-  column!: Column;
-  isEditingTitle = false;
-  columnTitle = '';
-  isEditingTask = false;
-  editedTask!: Task;
   titleError = false;
   taskTitleError = false;
   taskDescriptionError = false;
+  isEditingTask = false;
+  isEditingTitle = false;
 
   @ViewChild('titleInput') titleInput!: ElementRef;
   @Input()
@@ -48,10 +49,10 @@ export class ColumnComponent implements OnInit {
   order!: number;
 
   constructor(
-    private boardService: BoardService,
     public userService: UserService,
+    private boardService: BoardService,
     private modalService: NgbModal,
-    public dialog: Dialog
+    private dialog: Dialog
   ) {}
 
   ngOnInit(): void {
@@ -72,8 +73,8 @@ export class ColumnComponent implements OnInit {
   }
 
   openEditTitleInput() {
-    this.titleError = false;
     this.isEditingTitle = true;
+    this.titleError = false;
     this.columnTitle = this.title;
 
     setTimeout(() => {
@@ -155,7 +156,7 @@ export class ColumnComponent implements OnInit {
       });
   }
 
-  open(content: any) {
+  openModalWindow(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(

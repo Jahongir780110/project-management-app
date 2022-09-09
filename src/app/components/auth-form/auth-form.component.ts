@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from '../../services/user.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { Dialog } from '@angular/cdk/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Dialog } from '@angular/cdk/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '../../services/user.service';
+
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { AuthUser } from '../../models/authUser.model';
 
 @Component({
@@ -32,10 +33,10 @@ export class AuthFormComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private userService: UserService,
     private translateService: TranslateService,
+    private userService: UserService,
     private snackBar: MatSnackBar,
-    public dialog: Dialog
+    private dialog: Dialog
   ) {}
 
   ngOnInit(): void {
@@ -73,9 +74,7 @@ export class AuthFormComponent implements OnInit {
     this.userService.deleteUser().subscribe({
       next: () => {
         this.showSuccessAlert(message);
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 3000);
+        this.router.navigate(['/']);
       },
       error: (err) => {
         this.showErrorAlert(err);
@@ -141,6 +140,7 @@ export class AuthFormComponent implements OnInit {
       this.userService.editProfile(this.form).subscribe({
         next: () => {
           this.showSuccessAlert(message);
+          this.router.navigate(['/boards']);
         },
         error: (err) => {
           this.showErrorAlert(err);

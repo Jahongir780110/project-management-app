@@ -75,7 +75,7 @@
         *ngFor="let task of column.tasks"
         [task]="task"
         [columnId]="id"
-        (edit)="openEditTaskForm(task); open(content)"
+        (edit)="openEditTaskForm(task); openModalWindow(content)"
       ></app-task>
     </div>
   </div>
@@ -83,7 +83,7 @@
   <div class="px-2 mt-3">
     <button
       class="btn add-task__btn"
-      (click)="open(content); taskUserId = userService.user.id"
+      (click)="openModalWindow(content); taskUserId = userService.user.id"
     >
       + {{ "addNewTask" | translate }}
     </button>
@@ -104,6 +104,7 @@
       <label for="taskTitle" class="form-label"
         >{{ "taskTitle" | translate }}:</label
       >
+
       <input
         type="text"
         class="form-control"
@@ -112,6 +113,7 @@
         [placeholder]="'enterTaskTitle' | translate"
         [(ngModel)]="taskTitle"
       />
+
       <div *ngIf="taskTitleError" class="text-danger input-error">
         {{ "pleaseEnterValidTaskTitle" | translate }}
       </div>
@@ -121,6 +123,7 @@
       <label for="taskDescription" class="form-label"
         >{{ "taskDescription" | translate }}:</label
       >
+
       <input
         type="text"
         class="form-control"
@@ -129,6 +132,7 @@
         [placeholder]="'enterTaskDescription' | translate"
         [(ngModel)]="taskDescription"
       />
+
       <div *ngIf="taskDescriptionError" class="text-danger input-error">
         {{ "pleaseEnterValidTaskDescription" | translate }}
       </div>
@@ -138,6 +142,7 @@
       <label for="taskUser" class="form-label"
         >{{ "assignedUser" | translate }}:</label
       >
+
       <select id="taskUser" class="form-select" [(ngModel)]="taskUserId">
         <option *ngFor="let user of userService.users" [value]="user.id">
           {{ user.name }}
@@ -154,6 +159,7 @@
     >
       {{ "cancel" | translate }}
     </button>
+
     <button
       *ngIf="isEditingTask"
       type="button"
@@ -162,6 +168,7 @@
     >
       {{ "edit" | translate }}
     </button>
+
     <button
       *ngIf="!isEditingTask"
       type="button"

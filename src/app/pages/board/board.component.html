@@ -31,7 +31,7 @@
         cdkDrag
       ></app-column>
 
-      <button class="btn add-column-btn" (click)="open(content)">
+      <button class="btn add-column-btn" (click)="openModalWindow(content)">
         + {{ "addColumn" | translate }}
       </button>
     </div>
@@ -50,6 +50,7 @@
       <label for="title" class="form-label"
         >{{ "columnTitle" | translate }}:</label
       >
+
       <input
         type="text"
         class="form-control"
@@ -58,6 +59,7 @@
         [placeholder]="'enterColumnTitle' | translate"
         [(ngModel)]="title"
       />
+
       <div *ngIf="titleError" class="text-danger input-error">
         {{ "pleaseEnterValidColumnTitle" | translate }}
       </div>
@@ -72,6 +74,7 @@
     >
       {{ "cancel" | translate }}
     </button>
+
     <button
       type="button"
       class="btn btn-outline-primary"

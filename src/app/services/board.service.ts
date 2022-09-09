@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserService } from './user.service';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { UserService } from './user.service';
+
 import { Board } from '../models/board.model';
 import { Column } from '../models/column.model';
 import { Task } from '../models/task.model';

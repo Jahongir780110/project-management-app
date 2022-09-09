@@ -5,6 +5,7 @@
     <form class="form mt-4" (ngSubmit)="onSubmit($event)" #heroForm="ngForm">
       <div *ngIf="type !== 'login'" class="name mb-3">
         <label for="name" class="form-label">{{ "name" | translate }}:</label>
+
         <input
           type="text"
           class="form-control"
@@ -14,6 +15,7 @@
           [placeholder]="'enterName' | translate"
           [(ngModel)]="form.name"
         />
+
         <div *ngIf="nameError" class="text-danger input-error">
           {{ "pleaseEnterValidName" | translate }}
         </div>
@@ -23,6 +25,7 @@
         <label for="login" class="form-label"
           >{{ "loginName" | translate }}:</label
         >
+
         <input
           type="text"
           class="form-control"
@@ -32,6 +35,7 @@
           [placeholder]="'enterLogin' | translate"
           [(ngModel)]="form.login"
         />
+
         <div *ngIf="loginError" class="text-danger input-error">
           {{ "pleaseEnterValidLogin" | translate }}
         </div>
@@ -41,6 +45,7 @@
         <label for="password" class="form-label"
           >{{ "password" | translate }}:</label
         >
+
         <input
           type="password"
           class="form-control"
@@ -50,6 +55,7 @@
           [placeholder]="'enterPassword' | translate"
           [(ngModel)]="form.password"
         />
+
         <div *ngIf="passwordError" class="text-danger input-error">
           {{ "pleaseEnterValidPassword" | translate }}
         </div>
@@ -59,6 +65,7 @@
         <label for="repeat-password" class="form-label"
           >{{ "repeatPassword" | translate }}:</label
         >
+
         <input
           type="password"
           class="form-control"
@@ -68,6 +75,7 @@
           [placeholder]="'confirmPassword' | translate"
           [(ngModel)]="repeatPassword"
         />
+
         <div *ngIf="repeatPasswordError" class="text-danger input-error">
           {{ "passwordsMismatch" | translate }}
         </div>
@@ -93,6 +101,7 @@
         >
           {{ "delete" | translate }}
         </button>
+
         <button type="submit" class="btn btn-success">
           {{ "edit" | translate }}
         </button>
@@ -101,6 +110,7 @@
 
     <div *ngIf="type === 'login'" class="auth-switch text-center">
       <p class="mb-1">{{ "dontHaveAnAccount" | translate }}</p>
+
       <a routerLink="/signup" class="auth-switch__btn">{{
         "signup" | translate
       }}</a>
@@ -108,6 +118,7 @@
 
     <div *ngIf="type === 'signup'" class="auth-switch text-center">
       <p class="mb-1">{{ "alreadyHaveAnAccount" | translate }}</p>
+
       <a routerLink="/login" class="auth-switch__btn">{{
         "login" | translate
       }}</a>

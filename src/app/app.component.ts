@@ -9,8 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'project-management-app';
-
   constructor(
     private router: Router,
     private translateService: TranslateService,

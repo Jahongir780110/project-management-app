@@ -21,7 +21,3 @@
 input {
   margin: 8px 0;
 }
-
-button + button {
-  margin-left: 8px;
-}

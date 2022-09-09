@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
 import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '../../services/user.service';
+
 import { faTableColumns } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +20,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     public userService: UserService,
     private router: Router,
-    public translateService: TranslateService
+    private translateService: TranslateService
   ) {}
 
   get currentLang() {

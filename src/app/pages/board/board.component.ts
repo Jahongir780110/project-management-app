@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BoardService } from 'src/app/services/board.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { BoardService } from 'src/app/services/board.service';
 
 @Component({
   selector: 'app-board',
@@ -11,9 +11,9 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class BoardComponent implements OnInit {
   title = '';
+  titleError = false;
   boardId = '';
   isLoading = false;
-  titleError = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,6 +26,7 @@ export class BoardComponent implements OnInit {
     this.boardId = boardId;
 
     this.isLoading = true;
+
     this.boardService.getBoard(boardId).subscribe({
       complete: () => {
         this.isLoading = false;
@@ -45,7 +46,7 @@ export class BoardComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  open(content: any) {
+  openModalWindow(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
