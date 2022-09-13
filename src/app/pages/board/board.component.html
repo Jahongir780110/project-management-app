@@ -46,24 +46,41 @@
   </div>
 
   <div class="modal-body">
-    <div>
-      <label for="title" class="form-label"
-        >{{ "columnTitle" | translate }}:</label
-      >
+    <form #createColumnForm="ngForm">
+      <div>
+        <label for="title" class="form-label"
+          >{{ "columnTitle" | translate }}:</label
+        >
 
-      <input
-        type="text"
-        class="form-control"
-        [ngClass]="titleError ? 'is-invalid' : ''"
-        id="title"
-        [placeholder]="'enterColumnTitle' | translate"
-        [(ngModel)]="title"
-      />
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="
+            columnTitle.invalid && (columnTitle.dirty || columnTitle.touched)
+              ? 'is-invalid'
+              : ''
+          "
+          id="title"
+          name="title"
+          required
+          minlength="1"
+          [placeholder]="'enterColumnTitle' | translate"
+          [(ngModel)]="title"
+          #columnTitle="ngModel"
+        />
 
-      <div *ngIf="titleError" class="text-danger input-error">
-        {{ "pleaseEnterValidColumnTitle" | translate }}
+        <div
+          *ngIf="
+            columnTitle.invalid && (columnTitle.dirty || columnTitle.touched)
+              ? 'is-invalid'
+              : ''
+          "
+          class="text-danger input-error"
+        >
+          {{ "pleaseEnterValidColumnTitle" | translate }}
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 
   <div class="modal-footer">
@@ -78,7 +95,7 @@
     <button
       type="button"
       class="btn btn-outline-primary"
-      (click)="createColumn()"
+      (click)="createColumn(createColumnForm)"
     >
       {{ "ok" | translate }}
     </button>

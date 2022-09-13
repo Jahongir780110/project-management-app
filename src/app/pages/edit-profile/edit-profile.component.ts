@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgForm } from '@angular/forms';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,10 +22,6 @@ export class EditProfileComponent implements OnInit {
     name: '',
   };
   repeatPassword = '';
-
-  nameError = false;
-  loginError = false;
-  passwordError = false;
   repeatPasswordError = false;
   isLoading = false;
 
@@ -73,28 +70,12 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  onSubmit(e: Event): any {
-    e.preventDefault();
+  onSubmit(editProfile: NgForm): any {
+    if (editProfile.invalid) {
+      Object.keys(editProfile.controls).forEach((field) => {
+        editProfile.controls[field].markAsTouched({ onlySelf: true });
+      });
 
-    this.nameError = false;
-    this.loginError = false;
-    this.passwordError = false;
-    this.repeatPasswordError = false;
-
-    if (!this.form.name?.trim().length) {
-      this.nameError = true;
-      return;
-    }
-    if (!this.form.login.trim().length) {
-      this.loginError = true;
-      return;
-    }
-    if (!this.form.password.trim().length) {
-      this.passwordError = true;
-      return;
-    }
-    if (this.form.password.trim() !== this.repeatPassword) {
-      this.repeatPasswordError = true;
       return;
     }
 

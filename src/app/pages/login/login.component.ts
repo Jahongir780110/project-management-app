@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { UserService } from '../../services/user.service';
 import { AuthUser } from '../../models/authUser.model';
 
@@ -15,34 +17,22 @@ export class LoginComponent implements OnInit {
     login: '',
     password: '',
   };
-
-  loginError = false;
-  passwordError = false;
   isLoading = false;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private userService: UserService,
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
-    this.route.data.subscribe((val) => {});
-  }
+  ngOnInit(): void {}
 
-  onSubmit(e: Event): any {
-    e.preventDefault();
+  onSubmit(login: NgForm): any {
+    if (login.invalid) {
+      Object.keys(login.controls).forEach((field) => {
+        login.controls[field].markAsTouched({ onlySelf: true });
+      });
 
-    this.loginError = false;
-    this.passwordError = false;
-
-    if (!this.form.login.trim().length) {
-      this.loginError = true;
-      return;
-    }
-    if (!this.form.password.trim().length) {
-      this.passwordError = true;
       return;
     }
 

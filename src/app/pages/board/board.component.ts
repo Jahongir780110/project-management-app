@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { UserService } from 'src/app/services/user.service';
@@ -12,7 +13,6 @@ import { BoardService } from 'src/app/services/board.service';
 })
 export class BoardComponent implements OnInit {
   title = '';
-  titleError = false;
   boardId = '';
   isLoading = false;
 
@@ -38,11 +38,12 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  createColumn() {
-    this.titleError = false;
+  createColumn(createColumn: NgForm) {
+    if (createColumn.invalid) {
+      Object.keys(createColumn.controls).forEach((field) => {
+        createColumn.controls[field].markAsTouched({ onlySelf: true });
+      });
 
-    if (this.title.trim().length === 0) {
-      this.titleError = true;
       return;
     }
 
@@ -76,6 +77,5 @@ export class BoardComponent implements OnInit {
 
   initializeForm() {
     this.title = '';
-    this.titleError = false;
   }
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { UserService } from '../../services/user.service';
 import { AuthUser } from '../../models/authUser.model';
 
@@ -16,10 +18,6 @@ export class SignupComponent implements OnInit {
     password: '',
     name: '',
   };
-
-  nameError = false;
-  loginError = false;
-  passwordError = false;
   isLoading = false;
 
   constructor(
@@ -30,23 +28,12 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit(e: Event): any {
-    e.preventDefault();
+  onSubmit(signup: NgForm): any {
+    if (signup.invalid) {
+      Object.keys(signup.controls).forEach((field) => {
+        signup.controls[field].markAsTouched({ onlySelf: true });
+      });
 
-    this.nameError = false;
-    this.loginError = false;
-    this.passwordError = false;
-
-    if (!this.form.name?.trim().length) {
-      this.nameError = true;
-      return;
-    }
-    if (!this.form.login.trim().length) {
-      this.loginError = true;
-      return;
-    }
-    if (!this.form.password.trim().length) {
-      this.passwordError = true;
       return;
     }
 

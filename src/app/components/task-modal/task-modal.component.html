@@ -5,55 +5,82 @@
 </div>
 
 <div class="modal-body">
-  <div>
-    <label for="taskTitle" class="form-label"
-      >{{ "taskTitle" | translate }}:</label
-    >
+  <form #taskForm="ngForm">
+    <div>
+      <label for="taskTitle" class="form-label"
+        >{{ "taskTitle" | translate }}:</label
+      >
 
-    <input
-      type="text"
-      class="form-control"
-      [ngClass]="taskTitleError ? 'is-invalid' : ''"
-      id="taskTitle"
-      [placeholder]="'enterTaskTitle' | translate"
-      [(ngModel)]="taskTitle"
-    />
+      <input
+        type="text"
+        class="form-control"
+        [ngClass]="
+          title.invalid && (title.dirty || title.touched) ? 'is-invalid' : ''
+        "
+        id="taskTitle"
+        name="taskTitle"
+        required
+        minlength="1"
+        [placeholder]="'enterTaskTitle' | translate"
+        [(ngModel)]="taskTitle"
+        #title="ngModel"
+      />
 
-    <div *ngIf="taskTitleError" class="text-danger input-error">
-      {{ "pleaseEnterValidTaskTitle" | translate }}
+      <div
+        *ngIf="
+          title.invalid && (title.dirty || title.touched) ? 'is-invalid' : ''
+        "
+        class="text-danger input-error"
+      >
+        {{ "pleaseEnterValidTaskTitle" | translate }}
+      </div>
     </div>
-  </div>
 
-  <div class="mt-3">
-    <label for="taskDescription" class="form-label"
-      >{{ "taskDescription" | translate }}:</label
-    >
+    <div class="mt-3">
+      <label for="taskDescription" class="form-label"
+        >{{ "taskDescription" | translate }}:</label
+      >
 
-    <input
-      type="text"
-      class="form-control"
-      [ngClass]="taskDescriptionError ? 'is-invalid' : ''"
-      id="taskDescription"
-      [placeholder]="'enterTaskDescription' | translate"
-      [(ngModel)]="taskDescription"
-    />
+      <input
+        type="text"
+        class="form-control"
+        [ngClass]="
+          desc.invalid && (desc.dirty || desc.touched) ? 'is-invalid' : ''
+        "
+        id="taskDescription"
+        name="taskDescription"
+        required
+        minlength="1"
+        [placeholder]="'enterTaskDescription' | translate"
+        [(ngModel)]="taskDescription"
+        #desc="ngModel"
+      />
 
-    <div *ngIf="taskDescriptionError" class="text-danger input-error">
-      {{ "pleaseEnterValidTaskDescription" | translate }}
+      <div
+        *ngIf="desc.invalid && (desc.dirty || desc.touched) ? 'is-invalid' : ''"
+        class="text-danger input-error"
+      >
+        {{ "pleaseEnterValidTaskDescription" | translate }}
+      </div>
     </div>
-  </div>
 
-  <div class="mt-3">
-    <label for="taskUser" class="form-label"
-      >{{ "assignedUser" | translate }}:</label
-    >
+    <div class="mt-3">
+      <label for="taskUser" class="form-label"
+        >{{ "assignedUser" | translate }}:</label
+      >
 
-    <select id="taskUser" class="form-select" [(ngModel)]="taskUserId">
-      <option *ngFor="let user of userService.users" [value]="user.id">
-        {{ user.name }}
-      </option>
-    </select>
-  </div>
+      <select
+        id="taskUser"
+        name="taskUser"
+        class="form-select"
+        [(ngModel)]="taskUserId"
+      >
+        <option *ngFor="let user of userService.users" [value]="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+    </div>
+  </form>
 </div>
 
 <div class="modal-footer">
@@ -69,7 +96,7 @@
     *ngIf="isEditingTask"
     type="button"
     class="btn btn-outline-primary"
-    (click)="editTask()"
+    (click)="editTask(taskForm)"
   >
     {{ "edit" | translate }}
   </button>
@@ -78,7 +105,7 @@
     *ngIf="!isEditingTask"
     type="button"
     class="btn btn-outline-primary"
-    (click)="createTask()"
+    (click)="createTask(taskForm)"
   >
     {{ "ok" | translate }}
   </button>

@@ -35,8 +35,6 @@ export class ColumnComponent implements OnInit {
   taskDescription = '';
   taskUserId = '';
   titleError = false;
-  taskTitleError = false;
-  taskDescriptionError = false;
   isEditingTask = false;
   isEditingTitle = false;
 
@@ -171,7 +169,5 @@ export class ColumnComponent implements OnInit {
     this.taskDescription = '';
     this.taskUserId = '';
     this.isEditingTask = false;
-    this.taskTitleError = false;
-    this.taskDescriptionError = false;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { BoardService } from 'src/app/services/board.service';
 import { Task } from 'src/app/models/task.model';
@@ -15,9 +16,6 @@ export class TaskModalComponent implements OnInit {
   @Input() taskTitle!: string;
   @Input() taskDescription!: string;
   @Input() taskUserId!: string;
-  @Input() titleError!: boolean;
-  @Input() taskTitleError!: boolean;
-  @Input() taskDescriptionError!: boolean;
   @Input() isEditingTask!: boolean;
 
   constructor(
@@ -28,16 +26,12 @@ export class TaskModalComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  createTask() {
-    this.taskTitleError = false;
-    this.taskDescriptionError = false;
+  createTask(taskForm: NgForm) {
+    if (taskForm.invalid) {
+      Object.keys(taskForm.controls).forEach((field) => {
+        taskForm.controls[field].markAsTouched({ onlySelf: true });
+      });
 
-    if (!this.taskTitle.trim().length) {
-      this.taskTitleError = true;
-      return;
-    }
-    if (!this.taskDescription.trim().length) {
-      this.taskDescriptionError = true;
       return;
     }
 
@@ -48,16 +42,12 @@ export class TaskModalComponent implements OnInit {
       });
   }
 
-  editTask() {
-    this.taskTitleError = false;
-    this.taskDescriptionError = false;
+  editTask(taskForm: NgForm) {
+    if (taskForm.invalid) {
+      Object.keys(taskForm.controls).forEach((field) => {
+        taskForm.controls[field].markAsTouched({ onlySelf: true });
+      });
 
-    if (!this.taskTitle.trim().length) {
-      this.taskTitleError = true;
-      return;
-    }
-    if (!this.taskDescription.trim().length) {
-      this.taskDescriptionError = true;
       return;
     }
 

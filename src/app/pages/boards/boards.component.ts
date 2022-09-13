@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Dialog } from '@angular/cdk/dialog';
 import { BoardService } from 'src/app/services/board.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,8 +14,6 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 export class BoardsComponent implements OnInit {
   title = '';
   description = '';
-  titleError = false;
-  descriptionError = false;
   search = '';
   isLoading = false;
 
@@ -47,16 +46,12 @@ export class BoardsComponent implements OnInit {
     });
   }
 
-  createBoard() {
-    this.titleError = false;
-    this.descriptionError = false;
+  createBoard(createBoard: NgForm) {
+    if (createBoard.invalid) {
+      Object.keys(createBoard.controls).forEach((field) => {
+        createBoard.controls[field].markAsTouched({ onlySelf: true });
+      });
 
-    if (!this.title.trim().length) {
-      this.titleError = true;
-      return;
-    }
-    if (!this.description.trim().length) {
-      this.descriptionError = true;
       return;
     }
 
@@ -100,7 +95,5 @@ export class BoardsComponent implements OnInit {
   initializeForm() {
     this.title = '';
     this.description = '';
-    this.titleError = false;
-    this.descriptionError = false;
   }
 }

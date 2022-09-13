@@ -35,6 +35,8 @@ import { Router } from '@angular/router';
 import { UnauthorisedErrorInterceptor } from './interceptors/unauthorised-error.interceptor';
 import { UserService } from './services/user.service';
 
+import { CheckPasswordsDirective } from './directives/check-passwords.directive';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
 }
@@ -54,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     EditProfileComponent,
     TaskModalComponent,
+    CheckPasswordsDirective,
   ],
   imports: [
     BrowserModule,

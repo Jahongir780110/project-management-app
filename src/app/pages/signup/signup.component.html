@@ -2,21 +2,33 @@
   <div class="form-wrapper text-white">
     <h2 class="title text-center">{{ "signup" | translate }}</h2>
 
-    <form class="form mt-4" (ngSubmit)="onSubmit($event)">
+    <form
+      #signupForm="ngForm"
+      class="form mt-4"
+      (ngSubmit)="onSubmit(signupForm)"
+    >
       <div class="name mb-3">
         <label for="name" class="form-label">{{ "name" | translate }}:</label>
 
         <input
           type="text"
           class="form-control"
-          [ngClass]="nameError ? 'is-invalid' : ''"
+          [ngClass]="
+            name.invalid && (name.dirty || name.touched) ? 'is-invalid' : ''
+          "
           id="name"
           name="name"
+          required
+          minlength="1"
           [placeholder]="'enterName' | translate"
           [(ngModel)]="form.name"
+          #name="ngModel"
         />
 
-        <div *ngIf="nameError" class="text-danger input-error">
+        <div
+          *ngIf="name.invalid && (name.dirty || name.touched)"
+          class="text-danger input-error"
+        >
           {{ "pleaseEnterValidName" | translate }}
         </div>
       </div>
@@ -29,14 +41,22 @@
         <input
           type="text"
           class="form-control"
-          [ngClass]="loginError ? 'is-invalid' : ''"
+          [ngClass]="
+            login.invalid && (login.dirty || login.touched) ? 'is-invalid' : ''
+          "
           id="login"
           name="login"
+          required
+          minlength="1"
           [placeholder]="'enterLogin' | translate"
           [(ngModel)]="form.login"
+          #login="ngModel"
         />
 
-        <div *ngIf="loginError" class="text-danger input-error">
+        <div
+          *ngIf="login.invalid && (login.dirty || login.touched)"
+          class="text-danger input-error"
+        >
           {{ "pleaseEnterValidLogin" | translate }}
         </div>
       </div>
@@ -49,14 +69,24 @@
         <input
           type="password"
           class="form-control"
-          [ngClass]="passwordError ? 'is-invalid' : ''"
+          [ngClass]="
+            password.invalid && (password.dirty || password.touched)
+              ? 'is-invalid'
+              : ''
+          "
           id="password"
           name="password"
+          required
+          minlength="1"
           [placeholder]="'enterPassword' | translate"
           [(ngModel)]="form.password"
+          #password="ngModel"
         />
 
-        <div *ngIf="passwordError" class="text-danger input-error">
+        <div
+          *ngIf="password.invalid && (password.dirty || password.touched)"
+          class="text-danger input-error"
+        >
           {{ "pleaseEnterValidPassword" | translate }}
         </div>
       </div>
