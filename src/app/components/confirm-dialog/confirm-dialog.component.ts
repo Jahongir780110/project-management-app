@@ -16,46 +16,11 @@ export class ConfirmDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  get dialogTitle() {
-    let title = '';
-
-    switch (this.data.type) {
-      case 'board':
-        title = 'deleteBoardPrompt';
-        break;
-      case 'user':
-        title = 'deleteUserPrompt';
-        break;
-      case 'task':
-        title = 'deleteTaskPrompt';
-        break;
-      case 'column':
-        title = 'deleteColumnPrompt';
-        break;
-    }
-
-    return this.translateService.instant(title);
-  }
-
   closeDialog() {
     this.dialogRef.close();
   }
 
   delete() {
-    const type = this.data.type;
-    switch (type) {
-      case 'board':
-        this.dialogRef.close(this.data.id);
-        break;
-      case 'user':
-        this.dialogRef.close('delete');
-        break;
-      case 'task':
-        this.dialogRef.close('delete');
-        break;
-      case 'column':
-        this.dialogRef.close('column');
-        break;
-    }
+    this.dialogRef.close('delete');
   }
 }

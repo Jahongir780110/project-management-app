@@ -22,14 +22,14 @@
       (cdkDropListDropped)="drop($event)"
       class="columns d-flex align-items-start"
     >
-      <app-column
+      <app-board-column
         *ngFor="let column of boardService.selectedBoard?.columns"
         [title]="column.title"
         [id]="column.id"
         [order]="column.order"
         [cdkDragData]="column"
         cdkDrag
-      ></app-column>
+      ></app-board-column>
 
       <button class="btn add-column-btn" (click)="openModalWindow(content)">
         + {{ "addColumn" | translate }}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Dialog } from '@angular/cdk/dialog';
 import { BoardService } from 'src/app/services/board.service';
+import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -22,7 +23,8 @@ export class BoardsComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private boardService: BoardService,
-    private dialog: Dialog
+    private dialog: Dialog,
+    private translateService: TranslateService
   ) {}
 
   get filteredBoards() {
@@ -80,13 +82,12 @@ export class BoardsComponent implements OnInit {
 
     const dialogRef = this.dialog.open<string>(ConfirmDialogComponent, {
       data: {
-        type: 'board',
-        id,
+        title: this.translateService.instant('deleteBoardPrompt'),
       },
     });
 
-    dialogRef.closed.subscribe((id) => {
-      if (id) {
+    dialogRef.closed.subscribe((message) => {
+      if (message) {
         this.deleteBoard(id);
       }
     });

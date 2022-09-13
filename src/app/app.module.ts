@@ -26,7 +26,7 @@ import { BoardComponent } from './pages/board/board.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { LoginComponent } from './pages/login/login.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
-import { ColumnComponent } from './components/column/column.component';
+import { BoardColumnComponent } from './components/board-column/board-column.component';
 import { TaskComponent } from './components/task/task.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { TaskModalComponent } from './components/task-modal/task-modal.component';
@@ -49,7 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     WelcomeComponent,
     BoardsComponent,
     BoardComponent,
-    ColumnComponent,
+    BoardColumnComponent,
     TaskComponent,
     ConfirmDialogComponent,
     SignupComponent,

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { BoardService } from 'src/app/services/board.service';
+import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Dialog } from '@angular/cdk/dialog';
@@ -17,11 +18,11 @@ import { Column } from '../../models/column.model';
 import { Task } from 'src/app/models/task.model';
 
 @Component({
-  selector: 'app-column',
-  templateUrl: './column.component.html',
-  styleUrls: ['./column.component.css'],
+  selector: 'app-board-column',
+  templateUrl: './board-column.component.html',
+  styleUrls: ['./board-column.component.css'],
 })
-export class ColumnComponent implements OnInit {
+export class BoardColumnComponent implements OnInit {
   faEllipsisVertical = faEllipsisVertical;
   faTrash = faTrash;
   faPen = faPen;
@@ -50,6 +51,7 @@ export class ColumnComponent implements OnInit {
     public userService: UserService,
     private boardService: BoardService,
     private modalService: NgbModal,
+    private translateService: TranslateService,
     private dialog: Dialog
   ) {}
 
@@ -115,7 +117,7 @@ export class ColumnComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open<string>(ConfirmDialogComponent, {
       data: {
-        type: 'column',
+        title: this.translateService.instant('deleteColumnPrompt'),
       },
     });
 

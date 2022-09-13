@@ -45,7 +45,7 @@ export class EditProfileComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open<string>(ConfirmDialogComponent, {
       data: {
-        type: 'user',
+        title: this.translateService.instant('deleteUserPrompt'),
       },
     });
 

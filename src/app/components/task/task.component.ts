@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BoardService } from '../../services/board.service';
+import { TranslateService } from '@ngx-translate/core';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 
@@ -14,7 +15,11 @@ import { Task } from '../../models/task.model';
 export class TaskComponent implements OnInit {
   faXmark = faXmark;
 
-  constructor(private boardService: BoardService, private dialog: Dialog) {}
+  constructor(
+    private boardService: BoardService,
+    private dialog: Dialog,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -31,7 +36,7 @@ export class TaskComponent implements OnInit {
 
     const dialogRef = this.dialog.open<string>(ConfirmDialogComponent, {
       data: {
-        type: 'task',
+        title: this.translateService.instant('deleteTaskPrompt'),
       },
     });
 
