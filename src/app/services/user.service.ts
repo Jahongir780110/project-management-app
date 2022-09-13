@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
 import { environment } from '../../environments/environment';
@@ -13,10 +14,13 @@ import { User } from '../models/user.model';
 export class UserService {
   baseUrl = environment.baseUrl;
   token = '';
-  user!: User;
+  user: User | null = null;
   users: User[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   get isAuthenticated() {
     return this.token ? true : false;
@@ -31,14 +35,31 @@ export class UserService {
     };
   }
 
+  tryLogin() {
+    const token = localStorage.getItem('token');
+    let user;
+    if (localStorage.getItem('user')) {
+      user = JSON.parse(localStorage.getItem('user') || '');
+    }
+
+    if (user && token) {
+      this.token = token;
+      this.user = user;
+      this.router.navigate(['/boards']);
+    }
+  }
+
+  setUser(user: User) {
+    this.user = user;
+    localStorage.setItem('user', JSON.stringify(this.user));
+  }
+
   createUser(authUser: AuthUser) {
-    return this.http
-      .post<User>(`${this.baseUrl}/signup`, authUser, this.httpOptions)
-      .pipe(
-        tap((user) => {
-          this.user = user;
-        })
-      );
+    return this.http.post<User>(
+      `${this.baseUrl}/signup`,
+      authUser,
+      this.httpOptions
+    );
   }
 
   signIn(authUser: AuthUser) {
@@ -61,8 +82,7 @@ export class UserService {
               this.httpOptions
             )
             .subscribe((user) => {
-              this.user = user;
-              localStorage.setItem('user', JSON.stringify(this.user));
+              this.setUser(user);
             });
         })
       );
@@ -71,21 +91,20 @@ export class UserService {
   editProfile(user: AuthUser) {
     return this.http
       .put<User>(
-        `${this.baseUrl}/users/${this.user.id}`,
+        `${this.baseUrl}/users/${this.user?.id}`,
         user,
         this.httpOptions
       )
       .pipe(
         tap((user) => {
-          this.user = user;
-          localStorage.setItem('user', JSON.stringify(user));
+          this.setUser(user);
         })
       );
   }
 
   deleteUser() {
     return this.http
-      .delete(`${this.baseUrl}/users/${this.user.id}`, {
+      .delete(`${this.baseUrl}/users/${this.user?.id}`, {
         headers: new HttpHeaders({
           Authorization: `Bearer ${this.token}`,
         }),
@@ -99,11 +118,7 @@ export class UserService {
 
   logout() {
     this.token = '';
-    this.user = {
-      name: '',
-      id: '',
-      login: '',
-    };
+    this.user = null;
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   }

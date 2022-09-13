@@ -1,0 +1,42 @@
+.signup-page {
+  min-height: calc(100% - 160px);
+  background-color: #252934;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.form-wrapper {
+  width: 450px;
+  max-width: 94%;
+  background-color: #1e242c;
+  padding: 24px 32px;
+  border-radius: 12px;
+}
+@media (max-width: 420px) {
+  .form-wrapper {
+    padding: 24px 12px;
+  }
+}
+
+.auth-btn {
+  background-color: #e31b6d;
+  color: #fff;
+  border: none;
+  transition: 0.1s;
+  padding: 4px 32px;
+  font-weight: 500;
+}
+.auth-btn:hover {
+  opacity: 0.9;
+}
+.aut-btn:disabled {
+  cursor: no-drop;
+}
+
+.auth-switch__btn {
+  text-decoration: none;
+  color: #e31b6d;
+}

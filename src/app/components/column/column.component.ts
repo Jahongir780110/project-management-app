@@ -56,8 +56,6 @@ export class ColumnComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe();
-
     const column = this.boardService.selectedBoard.columns?.find(
       (col) => col.id === this.id
     );
@@ -110,63 +108,10 @@ export class ColumnComponent implements OnInit {
     this.taskUserId = task.userId;
   }
 
-  createTask() {
-    this.taskTitleError = false;
-    this.taskDescriptionError = false;
-
-    if (!this.taskTitle.trim().length) {
-      this.taskTitleError = true;
-      return;
-    }
-    if (!this.taskDescription.trim().length) {
-      this.taskDescriptionError = true;
-      return;
-    }
-
-    this.boardService
-      .addTask(this.taskTitle, this.taskDescription, this.taskUserId, this.id)
-      .subscribe(() => {
-        this.modalService.dismissAll();
-      });
-  }
-
-  editTask() {
-    this.taskTitleError = false;
-    this.taskDescriptionError = false;
-
-    if (!this.taskTitle.trim().length) {
-      this.taskTitleError = true;
-      return;
-    }
-    if (!this.taskDescription.trim().length) {
-      this.taskDescriptionError = true;
-      return;
-    }
-
-    this.boardService
-      .editTask(this.id, this.editedTask.id, {
-        ...this.editedTask,
-        title: this.taskTitle,
-        description: this.taskDescription,
-        userId: this.taskUserId,
-        columnId: this.id,
-      })
-      .subscribe(() => {
-        this.modalService.dismissAll();
-      });
-  }
-
   openModalWindow(content: any) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        () => {
-          this.initializeForm();
-        },
-        () => {
-          this.initializeForm();
-        }
-      );
+    this.modalService.open(content).result.then(null, () => {
+      this.initializeForm();
+    });
   }
 
   openDialog(): void {

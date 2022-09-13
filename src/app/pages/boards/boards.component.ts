@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Dialog } from '@angular/cdk/dialog';
-import { UserService } from 'src/app/services/user.service';
 import { BoardService } from 'src/app/services/board.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
@@ -75,16 +74,9 @@ export class BoardsComponent implements OnInit {
   }
 
   openModalWindow(content: any) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        () => {
-          this.initializeForm();
-        },
-        () => {
-          this.initializeForm();
-        }
-      );
+    this.modalService.open(content).result.then(null, () => {
+      this.initializeForm();
+    });
   }
 
   openDialog(event: Event, id: string): void {

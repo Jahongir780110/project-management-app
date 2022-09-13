@@ -1,0 +1,85 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">
+    {{ isEditingTask ? ("editTask" | translate) : ("createTask" | translate) }}
+  </h4>
+</div>
+
+<div class="modal-body">
+  <div>
+    <label for="taskTitle" class="form-label"
+      >{{ "taskTitle" | translate }}:</label
+    >
+
+    <input
+      type="text"
+      class="form-control"
+      [ngClass]="taskTitleError ? 'is-invalid' : ''"
+      id="taskTitle"
+      [placeholder]="'enterTaskTitle' | translate"
+      [(ngModel)]="taskTitle"
+    />
+
+    <div *ngIf="taskTitleError" class="text-danger input-error">
+      {{ "pleaseEnterValidTaskTitle" | translate }}
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <label for="taskDescription" class="form-label"
+      >{{ "taskDescription" | translate }}:</label
+    >
+
+    <input
+      type="text"
+      class="form-control"
+      [ngClass]="taskDescriptionError ? 'is-invalid' : ''"
+      id="taskDescription"
+      [placeholder]="'enterTaskDescription' | translate"
+      [(ngModel)]="taskDescription"
+    />
+
+    <div *ngIf="taskDescriptionError" class="text-danger input-error">
+      {{ "pleaseEnterValidTaskDescription" | translate }}
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <label for="taskUser" class="form-label"
+      >{{ "assignedUser" | translate }}:</label
+    >
+
+    <select id="taskUser" class="form-select" [(ngModel)]="taskUserId">
+      <option *ngFor="let user of userService.users" [value]="user.id">
+        {{ user.name }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-secondary"
+    (click)="modalService.dismissAll()"
+  >
+    {{ "cancel" | translate }}
+  </button>
+
+  <button
+    *ngIf="isEditingTask"
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="editTask()"
+  >
+    {{ "edit" | translate }}
+  </button>
+
+  <button
+    *ngIf="!isEditingTask"
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="createTask()"
+  >
+    {{ "ok" | translate }}
+  </button>
+</div>

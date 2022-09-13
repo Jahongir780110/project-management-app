@@ -23,10 +23,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { BoardsComponent } from './pages/boards/boards.component';
 import { BoardComponent } from './pages/board/board.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { LoginComponent } from './pages/login/login.component';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { AuthFormComponent } from './components/auth-form/auth-form.component';
+import { TaskModalComponent } from './components/task-modal/task-modal.component';
 
 import { Router } from '@angular/router';
 import { UnauthorisedErrorInterceptor } from './interceptors/unauthorised-error.interceptor';
@@ -47,7 +50,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     ColumnComponent,
     TaskComponent,
     ConfirmDialogComponent,
-    AuthFormComponent,
+    SignupComponent,
+    LoginComponent,
+    EditProfileComponent,
+    TaskModalComponent,
   ],
   imports: [
     BrowserModule,

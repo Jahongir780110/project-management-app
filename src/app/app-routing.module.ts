@@ -3,16 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { BoardsComponent } from './pages/boards/boards.component';
 import { BoardComponent } from './pages/board/board.component';
-import { AuthFormComponent } from './components/auth-form/auth-form.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
-  { path: 'login', component: AuthFormComponent, data: { type: 'login' } },
-  { path: 'signup', component: AuthFormComponent, data: { type: 'signup' } },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   {
     path: 'edit-profile',
-    component: AuthFormComponent,
-    data: { type: 'editProfile' },
+    component: EditProfileComponent,
   },
   { path: 'boards', component: BoardsComponent },
   { path: 'boards/:id', component: BoardComponent },

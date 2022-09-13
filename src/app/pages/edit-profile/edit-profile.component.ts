@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,13 +10,11 @@ import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confir
 import { AuthUser } from '../../models/authUser.model';
 
 @Component({
-  selector: 'app-auth-form',
-  templateUrl: './auth-form.component.html',
-  styleUrls: ['./auth-form.component.css'],
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.css'],
 })
-export class AuthFormComponent implements OnInit {
-  type = '';
-
+export class EditProfileComponent implements OnInit {
   form: AuthUser = {
     login: '',
     password: '',
@@ -32,7 +30,6 @@ export class AuthFormComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private translateService: TranslateService,
     private userService: UserService,
     private snackBar: MatSnackBar,
@@ -40,18 +37,12 @@ export class AuthFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe((val) => {
-      this.type = val['type'];
-
-      if (this.type === 'editProfile') {
-        if (!this.userService.isAuthenticated) {
-          this.router.navigate(['/login']);
-        } else {
-          this.form.name = this.userService.user.name;
-          this.form.login = this.userService.user.login;
-        }
-      }
-    });
+    if (!this.userService.isAuthenticated) {
+      this.router.navigate(['/login']);
+    } else {
+      this.form.name = this.userService.user?.name;
+      this.form.login = this.userService.user?.login || '';
+    }
   }
 
   openDialog(): void {
@@ -90,7 +81,7 @@ export class AuthFormComponent implements OnInit {
     this.passwordError = false;
     this.repeatPasswordError = false;
 
-    if (this.type !== 'login' && !this.form.name?.trim().length) {
+    if (!this.form.name?.trim().length) {
       this.nameError = true;
       return;
     }
@@ -102,51 +93,24 @@ export class AuthFormComponent implements OnInit {
       this.passwordError = true;
       return;
     }
-    if (
-      this.type === 'editProfile' &&
-      this.form.password.trim() !== this.repeatPassword
-    ) {
+    if (this.form.password.trim() !== this.repeatPassword) {
       this.repeatPasswordError = true;
       return;
     }
 
     this.isLoading = true;
 
-    if (this.type === 'login') {
-      this.userService
-        .signIn({ login: this.form.login, password: this.form.password })
-        .subscribe({
-          next: () => {
-            this.router.navigate(['/boards']);
-          },
-          error: (err) => {
-            this.isLoading = false;
-            this.showErrorAlert(err);
-          },
-        });
-    } else if (this.type === 'signup') {
-      this.userService.createUser(this.form).subscribe({
-        next: () => {
-          this.router.navigate(['/login']);
-        },
-        error: (err) => {
-          this.isLoading = false;
-          this.showErrorAlert(err);
-        },
-      });
-    } else if (this.type === 'editProfile') {
-      const message: string = this.translateService.instant('userEditSuccess');
+    const message: string = this.translateService.instant('userEditSuccess');
 
-      this.userService.editProfile(this.form).subscribe({
-        next: () => {
-          this.showSuccessAlert(message);
-          this.router.navigate(['/boards']);
-        },
-        error: (err) => {
-          this.showErrorAlert(err);
-        },
-      });
-    }
+    this.userService.editProfile(this.form).subscribe({
+      next: () => {
+        this.showSuccessAlert(message);
+        this.router.navigate(['/boards']);
+      },
+      error: (err) => {
+        this.showErrorAlert(err);
+      },
+    });
   }
 
   showErrorAlert(res: HttpErrorResponse) {
