@@ -36,6 +36,7 @@ import { UnauthorisedErrorInterceptor } from './interceptors/unauthorised-error.
 import { UserService } from './services/user.service';
 
 import { CheckPasswordsDirective } from './directives/check-passwords.directive';
+import { TrimDirective } from './directives/trim.directive';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -57,6 +58,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EditProfileComponent,
     TaskModalComponent,
     CheckPasswordsDirective,
+    TrimDirective,
   ],
   imports: [
     BrowserModule,
