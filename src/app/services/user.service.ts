@@ -17,10 +17,7 @@ export class UserService {
   user: User | null = null;
   users: User[] = [];
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   get isAuthenticated() {
     return this.token ? true : false;

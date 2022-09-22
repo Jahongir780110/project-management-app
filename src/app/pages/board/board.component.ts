@@ -53,8 +53,6 @@ export class BoardComponent implements OnInit {
 
   openModalWindow(content: any) {
     this.modalService.open(content).result.then(null, () => {
-      console.log('worked');
-
       this.initializeForm();
     });
   }

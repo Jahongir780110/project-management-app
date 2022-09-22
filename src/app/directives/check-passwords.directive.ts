@@ -25,6 +25,7 @@ export class CheckPasswordsDirective implements Validator {
     if (c.value === this.password) {
       return null;
     }
+
     return {
       checkPasswords: { value: c.value },
     };
