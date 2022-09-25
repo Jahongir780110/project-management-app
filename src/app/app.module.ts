@@ -31,12 +31,12 @@ import { TaskComponent } from './components/task/task.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { TaskModalComponent } from './components/task-modal/task-modal.component';
 
+import { CheckPasswordsDirective } from './directives/check-passwords.directive';
+import { TrimDirective } from './directives/trim.directive';
+
 import { Router } from '@angular/router';
 import { UnauthorisedErrorInterceptor } from './interceptors/unauthorised-error.interceptor';
 import { UserService } from './services/user.service';
-
-import { CheckPasswordsDirective } from './directives/check-passwords.directive';
-import { TrimDirective } from './directives/trim.directive';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');

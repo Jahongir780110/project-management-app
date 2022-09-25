@@ -28,10 +28,10 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe();
 
+    this.isLoading = true;
+
     const boardId = this.route.snapshot.paramMap.get('id') as string;
     this.boardId = boardId;
-
-    this.isLoading = true;
 
     this.boardService.getBoard(boardId).subscribe({
       complete: () => {

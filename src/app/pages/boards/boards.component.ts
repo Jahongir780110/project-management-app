@@ -57,26 +57,26 @@ export class BoardsComponent implements OnInit {
       return;
     }
 
-    this.boardService
-      .createBoard(this.title, this.description)
-      .subscribe(() => {
+    this.boardService.createBoard(this.title, this.description).subscribe({
+      complete: () => {
         this.modalService.dismissAll();
-      });
+      },
+    });
   }
 
   deleteBoard(id: string) {
-    this.boardService.deleteBoard(id).subscribe(() => {
-      this.modalService.dismissAll();
+    this.boardService.deleteBoard(id).subscribe({
+      complete: () => {
+        this.modalService.dismissAll();
+      },
     });
   }
 
   openModalWindow(content: any) {
-    this.modalService.open(content).result.then(null, () => {
-      this.initializeForm();
-    });
+    this.modalService.open(content);
   }
 
-  openDialog(event: Event, id: string): void {
+  openConfirmDialog(event: Event, id: string): void {
     event.stopPropagation();
     event.preventDefault();
 
