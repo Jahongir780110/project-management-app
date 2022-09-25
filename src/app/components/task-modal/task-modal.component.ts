@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
-import { BoardService } from 'src/app/services/board.service';
+import { TaskService } from 'src/app/services/task.service';
 import { Task } from 'src/app/models/task.model';
 
 @Component({
@@ -19,7 +19,7 @@ export class TaskModalComponent implements OnInit {
   @Input() isEditingTask!: boolean;
 
   constructor(
-    private boardService: BoardService,
+    private taskService: TaskService,
     public userService: UserService,
     public modalService: NgbModal
   ) {}
@@ -35,7 +35,7 @@ export class TaskModalComponent implements OnInit {
       return;
     }
 
-    this.boardService
+    this.taskService
       .addTask(this.taskTitle, this.taskDescription, this.taskUserId, this.id)
       .subscribe(() => {
         this.modalService.dismissAll();
@@ -51,7 +51,7 @@ export class TaskModalComponent implements OnInit {
       return;
     }
 
-    this.boardService
+    this.taskService
       .editTask(this.id, this.editedTask.id, {
         ...this.editedTask,
         title: this.taskTitle,

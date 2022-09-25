@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { UserService } from 'src/app/services/user.service';
 import { BoardService } from 'src/app/services/board.service';
+import { ColumnService } from 'src/app/services/column.service';
 
 @Component({
   selector: 'app-board',
@@ -20,7 +21,8 @@ export class BoardComponent implements OnInit {
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private userService: UserService,
-    public boardService: BoardService
+    public boardService: BoardService,
+    private columnService: ColumnService
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class BoardComponent implements OnInit {
       return;
     }
 
-    this.boardService.addColumn(this.title).subscribe();
+    this.columnService.addColumn(this.title).subscribe();
     this.modalService.dismissAll();
   }
 
@@ -64,7 +66,7 @@ export class BoardComponent implements OnInit {
       event.currentIndex
     );
 
-    this.boardService
+    this.columnService
       .editColumn(
         event.item.data.id,
         event.currentIndex + 1,

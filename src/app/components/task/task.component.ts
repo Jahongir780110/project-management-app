@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { BoardService } from '../../services/board.service';
+import { TaskService } from '../../services/task.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
@@ -16,7 +16,7 @@ export class TaskComponent implements OnInit {
   faXmark = faXmark;
 
   constructor(
-    private boardService: BoardService,
+    private taskService: TaskService,
     private dialog: Dialog,
     private translateService: TranslateService
   ) {}
@@ -48,7 +48,7 @@ export class TaskComponent implements OnInit {
   }
 
   deleteTask() {
-    this.boardService.deleteTask(this.columnId, this.task.id).subscribe();
+    this.taskService.deleteTask(this.columnId, this.task.id).subscribe();
   }
 
   editTask() {

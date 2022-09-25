@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { BoardService } from 'src/app/services/board.service';
+import { ColumnService } from 'src/app/services/column.service';
+import { TaskService } from 'src/app/services/task.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -48,8 +50,10 @@ export class BoardColumnComponent implements OnInit {
   order!: number;
 
   constructor(
-    public userService: UserService,
+    private userService: UserService,
     private boardService: BoardService,
+    private columnService: ColumnService,
+    private taskService: TaskService,
     private modalService: NgbModal,
     private translateService: TranslateService,
     private dialog: Dialog
@@ -88,7 +92,7 @@ export class BoardColumnComponent implements OnInit {
       return;
     }
 
-    this.boardService
+    this.columnService
       .editColumn(this.id, this.order, this.columnTitle)
       .subscribe(() => {
         this.isEditingTitle = false;
@@ -97,10 +101,10 @@ export class BoardColumnComponent implements OnInit {
   }
 
   deleteColumn() {
-    this.boardService.deleteColumn(this.id).subscribe();
+    this.columnService.deleteColumn(this.id).subscribe();
   }
 
-  openEditTaskForm(task: Task) {
+  fillEditTaskForm(task: Task) {
     this.isEditingTask = true;
     this.editedTask = task;
     this.taskTitle = task.title;
@@ -109,6 +113,8 @@ export class BoardColumnComponent implements OnInit {
   }
 
   openModalWindow(content: any) {
+    this.taskUserId = this.userService.user?.id || '';
+
     this.modalService.open(content).result.then(null, () => {
       this.initializeForm();
     });
@@ -136,7 +142,7 @@ export class BoardColumnComponent implements OnInit {
         event.currentIndex
       );
 
-      this.boardService
+      this.taskService
         .editTask(this.column.id, event.item.data.id, {
           ...event.item.data,
           order: event.currentIndex + 1,
@@ -151,7 +157,7 @@ export class BoardColumnComponent implements OnInit {
         event.currentIndex
       );
 
-      this.boardService
+      this.taskService
         .editTask(
           event.previousContainer.id,
           event.item.data.id,

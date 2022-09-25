@@ -75,7 +75,7 @@
         *ngFor="let task of column.tasks"
         [task]="task"
         [columnId]="id"
-        (edit)="openEditTaskForm(task); openModalWindow(content)"
+        (edit)="openModalWindow(content); fillEditTaskForm(task);"
       ></app-task>
     </div>
   </div>
@@ -84,7 +84,7 @@
     <button
       class="btn add-task__btn"
       (click)="
-        openModalWindow(content); taskUserId = userService.user?.id || ''
+        openModalWindow(content);
       "
     >
       + {{ "addNewTask" | translate }}

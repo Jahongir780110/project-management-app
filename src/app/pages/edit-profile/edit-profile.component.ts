@@ -71,11 +71,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   onSubmit(editProfile: NgForm): any {
-    // return console.log('editProfile', editProfile);
-
     if (editProfile.invalid) {
       Object.keys(editProfile.controls).forEach((field) => {
-        // editProfile.controls[field].markAsTouched({ onlySelf: true });
         editProfile.controls[field].markAsTouched();
       });
 
