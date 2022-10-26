@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { UserService } from 'src/app/services/user.service';
-import { BoardService } from 'src/app/services/board.service';
-import { ColumnService } from 'src/app/services/column.service';
+import { UserService } from 'src/app/user/user.service';
+import { BoardService } from '../board.service';
+import { ColumnService } from 'src/app/boards/column.service';
 
 @Component({
   selector: 'app-board',

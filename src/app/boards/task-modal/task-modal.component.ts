@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
-import { TaskService } from 'src/app/services/task.service';
+import { UserService } from 'src/app/user/user.service';
+import { TaskService } from 'src/app/boards/task.service';
 import { Task } from 'src/app/models/task.model';
 
 @Component({

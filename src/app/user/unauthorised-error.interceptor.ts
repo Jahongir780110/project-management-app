@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { UserService } from './user.service';
 
 @Injectable()
 export class UnauthorisedErrorInterceptor implements HttpInterceptor {
@@ -17,6 +17,8 @@ export class UnauthorisedErrorInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    console.log('hehe');
+
     return next.handle(request).pipe(
       catchError((e) => {
         if (e.status === 401) {

@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
-import { BoardService } from 'src/app/services/board.service';
-import { ColumnService } from 'src/app/services/column.service';
-import { TaskService } from 'src/app/services/task.service';
+import { UserService } from 'src/app/user/user.service';
+import { BoardService } from '../board.service';
+import { ColumnService } from 'src/app/boards/column.service';
+import { TaskService } from 'src/app/boards/task.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Dialog } from '@angular/cdk/dialog';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { UserService } from './user.service';
+import { UserService } from '../user/user.service';
 
 import { BoardService } from './board.service';
 import { Column } from '../models/column.model';

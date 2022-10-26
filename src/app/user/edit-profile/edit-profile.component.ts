@@ -5,9 +5,9 @@ import { NgForm } from '@angular/forms';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../user.service';
 
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { AuthUser } from '../../models/authUser.model';
 
 @Component({

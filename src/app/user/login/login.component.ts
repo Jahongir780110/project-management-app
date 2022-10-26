@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { UserService } from '../../services/user.service';
+import { UserService } from '../user.service';
 import { AuthUser } from '../../models/authUser.model';
 
 @Component({
