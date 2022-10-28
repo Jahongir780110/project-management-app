@@ -71,11 +71,7 @@
         <input
           type="text"
           class="form-control"
-          [ngClass]="
-            boardTitle.invalid && (boardTitle.dirty || boardTitle.touched)
-              ? 'is-invalid'
-              : ''
-          "
+          [ngClass]="boardTitle.invalid && boardTitle.dirty ? 'is-invalid' : ''"
           id="title"
           name="title"
           appTrim
@@ -87,11 +83,7 @@
         />
 
         <div
-          *ngIf="
-            boardTitle.invalid && (boardTitle.dirty || boardTitle.touched)
-              ? 'is-invalid'
-              : ''
-          "
+          *ngIf="boardTitle.invalid && boardTitle.dirty ? 'is-invalid' : ''"
           class="text-danger input-error"
         >
           {{ "pleaseEnterValidBoardTitle" | translate }}
@@ -107,7 +99,7 @@
           type="text"
           class="form-control"
           [ngClass]="
-            boardDesc.invalid && (boardDesc.dirty || boardDesc.touched)
+            boardDesc.invalid && boardDesc.dirty
               ? 'is-invalid'
               : ''
               ? 'is-invalid'
@@ -125,7 +117,7 @@
 
         <div
           *ngIf="
-            boardDesc.invalid && (boardDesc.dirty || boardDesc.touched)
+            boardDesc.invalid && boardDesc.dirty
               ? 'is-invalid'
               : ''
               ? 'is-invalid'

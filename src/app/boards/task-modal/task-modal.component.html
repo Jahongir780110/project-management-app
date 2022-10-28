@@ -14,9 +14,7 @@
       <input
         type="text"
         class="form-control"
-        [ngClass]="
-          title.invalid && (title.dirty || title.touched) ? 'is-invalid' : ''
-        "
+        [ngClass]="title.invalid && title.dirty ? 'is-invalid' : ''"
         id="taskTitle"
         name="taskTitle"
         appTrim
@@ -28,9 +26,7 @@
       />
 
       <div
-        *ngIf="
-          title.invalid && (title.dirty || title.touched) ? 'is-invalid' : ''
-        "
+        *ngIf="title.invalid && title.dirty ? 'is-invalid' : ''"
         class="text-danger input-error"
       >
         {{ "pleaseEnterValidTaskTitle" | translate }}
@@ -45,9 +41,7 @@
       <input
         type="text"
         class="form-control"
-        [ngClass]="
-          desc.invalid && (desc.dirty || desc.touched) ? 'is-invalid' : ''
-        "
+        [ngClass]="desc.invalid && desc.dirty ? 'is-invalid' : ''"
         id="taskDescription"
         name="taskDescription"
         appTrim
@@ -59,7 +53,7 @@
       />
 
       <div
-        *ngIf="desc.invalid && (desc.dirty || desc.touched) ? 'is-invalid' : ''"
+        *ngIf="desc.invalid && desc.dirty ? 'is-invalid' : ''"
         class="text-danger input-error"
       >
         {{ "pleaseEnterValidTaskDescription" | translate }}

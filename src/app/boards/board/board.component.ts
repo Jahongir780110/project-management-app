@@ -43,7 +43,7 @@ export class BoardComponent implements OnInit {
   createColumn(createColumn: NgForm) {
     if (createColumn.invalid) {
       Object.keys(createColumn.controls).forEach((field) => {
-        createColumn.controls[field].markAsTouched({ onlySelf: true });
+        createColumn.controls[field].markAsDirty({ onlySelf: true });
       });
 
       return;

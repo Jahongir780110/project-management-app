@@ -22,6 +22,7 @@
           [placeholder]="'enterColumnTitle' | translate"
           #titleInput
           [(ngModel)]="columnTitle"
+          (keyup.enter)="editColumn()"
         />
         <fa-icon
           [icon]="faCheck"
@@ -75,18 +76,13 @@
         *ngFor="let task of column.tasks"
         [task]="task"
         [columnId]="id"
-        (edit)="openModalWindow(content); fillEditTaskForm(task);"
+        (edit)="openModalWindow(content); fillEditTaskForm(task)"
       ></app-task>
     </div>
   </div>
 
   <div class="px-2 mt-3">
-    <button
-      class="btn add-task__btn"
-      (click)="
-        openModalWindow(content);
-      "
-    >
+    <button class="btn add-task__btn" (click)="openModalWindow(content)">
       + {{ "addNewTask" | translate }}
     </button>
   </div>

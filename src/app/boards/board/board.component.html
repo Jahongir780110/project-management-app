@@ -56,9 +56,7 @@
           type="text"
           class="form-control"
           [ngClass]="
-            columnTitle.invalid && (columnTitle.dirty || columnTitle.touched)
-              ? 'is-invalid'
-              : ''
+            columnTitle.invalid && columnTitle.dirty ? 'is-invalid' : ''
           "
           id="title"
           name="title"
@@ -71,11 +69,7 @@
         />
 
         <div
-          *ngIf="
-            columnTitle.invalid && (columnTitle.dirty || columnTitle.touched)
-              ? 'is-invalid'
-              : ''
-          "
+          *ngIf="columnTitle.invalid && columnTitle.dirty ? 'is-invalid' : ''"
           class="text-danger input-error"
         >
           {{ "pleaseEnterValidColumnTitle" | translate }}

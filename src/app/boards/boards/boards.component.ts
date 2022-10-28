@@ -28,13 +28,15 @@ export class BoardsComponent implements OnInit {
   ) {}
 
   get filteredBoards() {
-    if (this.search.trim().length === 0) {
+    const searchValue = this.search.trim().toLowerCase();
+    if (searchValue.length === 0) {
       return this.boardService.boards;
     }
 
     return this.boardService.boards.filter(
       (b) =>
-        b.title.includes(this.search) || b.description.includes(this.search)
+        b.title.toLowerCase().includes(searchValue) ||
+        b.description.toLowerCase().includes(searchValue)
     );
   }
 
@@ -51,7 +53,7 @@ export class BoardsComponent implements OnInit {
   createBoard(createBoard: NgForm) {
     if (createBoard.invalid) {
       Object.keys(createBoard.controls).forEach((field) => {
-        createBoard.controls[field].markAsTouched({ onlySelf: true });
+        createBoard.controls[field].markAsDirty({ onlySelf: true });
       });
 
       return;

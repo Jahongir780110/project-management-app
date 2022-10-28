@@ -29,7 +29,7 @@ export class TaskModalComponent implements OnInit {
   createTask(taskForm: NgForm) {
     if (taskForm.invalid) {
       Object.keys(taskForm.controls).forEach((field) => {
-        taskForm.controls[field].markAsTouched({ onlySelf: true });
+        taskForm.controls[field].markAsDirty({ onlySelf: true });
       });
 
       return;
@@ -45,7 +45,7 @@ export class TaskModalComponent implements OnInit {
   editTask(taskForm: NgForm) {
     if (taskForm.invalid) {
       Object.keys(taskForm.controls).forEach((field) => {
-        taskForm.controls[field].markAsTouched({ onlySelf: true });
+        taskForm.controls[field].markAsDirty({ onlySelf: true });
       });
 
       return;
